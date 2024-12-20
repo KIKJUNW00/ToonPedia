@@ -1,0 +1,25 @@
+package edu.pnu.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import edu.pnu.domain.Role;
+import edu.pnu.domain.User;
+import edu.pnu.persistence.UserRepository;
+
+@Service
+public class UserJoinService {
+	@Autowired
+	private UserRepository UserRepo;
+	
+	@Autowired
+	private PasswordEncoder encoder;
+	
+//	유저 회원가입 정보 저장
+	public void save(User user) {
+		user.setPassword(encoder.encode(user.getPassword()));
+		user.setRole(Role.ROLE_USER);
+		UserRepo.save(user);
+	}
+}

@@ -1,0 +1,26 @@
+package edu.pnu.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+import edu.pnu.domain.User;
+import edu.pnu.persistence.UserRepository;
+
+@Service
+public class UserLoginService implements UserDetailsService{
+	
+	@Autowired
+	private UserRepository userRepo;
+	
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		//memRepo에서 사용자 정보를 검색해서 
+				User user = userRepo.findAll(username)
+						.orElseThrow(()->new UsernameNotFoundException("Not Found"));
+				System.out.println(user); //검색된 사용자 정보를 console에 출력해서 확인
+		return null;
+	}
+}

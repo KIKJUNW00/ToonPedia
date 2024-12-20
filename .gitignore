@@ -1,162 +1,162 @@
-#################################백엔드 gitignore#############################
-HELP.md
-target/
-!.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+# #################################백엔드 gitignore#############################
+# HELP.md
+# target/
+# !.mvn/wrapper/maven-wrapper.jar
+# !**/src/main/**/target/
+# !**/src/test/**/target/
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
+# ### STS ###
+# .apt_generated
+# .classpath
+# .factorypath
+# .project
+# .settings
+# .springBeans
+# .sts4-cache
 
-### Maven ###
-target/
-pom.xml.tag
-pom.xml.releaseBackup
-pom.xml.versionsBackup
-pom.xml.next
-release.properties
-dependency-reduced-pom.xml
-buildNumber.properties
-.mvn/timing.properties
-# https://github.com/takari/maven-wrapper#usage-without-binary-jar
-.mvn/wrapper/maven-wrapper.jar
+# ### Maven ###
+# target/
+# pom.xml.tag
+# pom.xml.releaseBackup
+# pom.xml.versionsBackup
+# pom.xml.next
+# release.properties
+# dependency-reduced-pom.xml
+# buildNumber.properties
+# .mvn/timing.properties
+# # https://github.com/takari/maven-wrapper#usage-without-binary-jar
+# .mvn/wrapper/maven-wrapper.jar
 
-# Eclipse m2e generated files
-# Eclipse Core
-.project
-# JDT-specific (Eclipse Java Development Tools)
-.classpath
+# # Eclipse m2e generated files
+# # Eclipse Core
+# .project
+# # JDT-specific (Eclipse Java Development Tools)
+# .classpath
 
-### Java ###
-# Compiled class file
-*.class
+# ### Java ###
+# # Compiled class file
+# *.class
 
-# Log file
-*.log
+# # Log file
+# *.log
 
-# BlueJ files
-*.ctxt
+# # BlueJ files
+# *.ctxt
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+# # Mobile Tools for Java (J2ME)
+# .mtj.tmp/
 
-# Package Files #
-*.jar
-*.war
-*.nar
-*.ear
-*.zip
-*.tar.gz
-*.rar
-
-
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
-/src/main/resources
-/src/test/java
+# # Package Files #
+# *.jar
+# *.war
+# *.nar
+# *.ear
+# *.zip
+# *.tar.gz
+# *.rar
 
 
-##############################################프론트 gitignore########################################
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# ### NetBeans ###
+# /nbproject/private/
+# /nbbuild/
+# /dist/
+# /nbdist/
+# /.nb-gradle/
+# build/
+# !**/src/main/**/build/
+# !**/src/test/**/build/
+# /src/main/resources
+# /src/test/java
+
+
+# ##############################################프론트 gitignore########################################
+# # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
-/.pnp
-.pnp.js
-
-# testing
-/coverage
-
-# production
-/build
-
-# misc
-.DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-
-# Created by https://www.toptal.com/developers/gitignore/api/react,visualstudiocode,windows
-# Edit at https://www.toptal.com/developers/gitignore?templates=react,visualstudiocode,windows
-
-### react ###
-.DS_*
-*.log
-logs
-**/*.backup.*
-**/*.back.*
-
 node_modules
-bower_components
+# /.pnp
+# .pnp.js
 
-*.sublime*
+# # testing
+# /coverage
 
-psd
-thumb
-sketch
+# # production
+# /build
 
-### VisualStudioCode ###
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-!.vscode/*.code-snippets
+# # misc
+# .DS_Store
+# .env.local
+# .env.development.local
+# .env.test.local
+# .env.production.local
 
-# Local History for Visual Studio Code
-.history/
+# npm-debug.log*
+# yarn-debug.log*
+# yarn-error.log*
 
-# Built Visual Studio Code Extensions
-*.vsix
 
-### VisualStudioCode Patch ###
-# Ignore all local history of files
-.history
-.ionide
+# # Created by https://www.toptal.com/developers/gitignore/api/react,visualstudiocode,windows
+# # Edit at https://www.toptal.com/developers/gitignore?templates=react,visualstudiocode,windows
 
-### Windows ###
-# Windows thumbnail cache files
-Thumbs.db
-Thumbs.db:encryptable
-ehthumbs.db
-ehthumbs_vista.db
+# ### react ###
+# .DS_*
+# *.log
+# logs
+# **/*.backup.*
+# **/*.back.*
 
-# Dump file
-*.stackdump
+# node_modules
+# bower_components
 
-# Folder config file
-[Dd]esktop.ini
+# *.sublime*
 
-# Recycle Bin used on file shares
-$RECYCLE.BIN/
+# psd
+# thumb
+# sketch
 
-# Windows Installer files
-*.cab
-*.msi
-*.msix
-*.msm
-*.msp
+# ### VisualStudioCode ###
+# .vscode/*
+# !.vscode/settings.json
+# !.vscode/tasks.json
+# !.vscode/launch.json
+# !.vscode/extensions.json
+# !.vscode/*.code-snippets
 
-# Windows shortcuts
-*.lnk
+# # Local History for Visual Studio Code
+# .history/
 
-# End of https://www.toptal.com/developers/gitignore/api/react,visualstudiocode,windows
+# # Built Visual Studio Code Extensions
+# *.vsix
+
+# ### VisualStudioCode Patch ###
+# # Ignore all local history of files
+# .history
+# .ionide
+
+# ### Windows ###
+# # Windows thumbnail cache files
+# Thumbs.db
+# Thumbs.db:encryptable
+# ehthumbs.db
+# ehthumbs_vista.db
+
+# # Dump file
+# *.stackdump
+
+# # Folder config file
+# [Dd]esktop.ini
+
+# # Recycle Bin used on file shares
+# $RECYCLE.BIN/
+
+# # Windows Installer files
+# *.cab
+# *.msi
+# *.msix
+# *.msm
+# *.msp
+
+# # Windows shortcuts
+# *.lnk
+
+# # End of https://www.toptal.com/developers/gitignore/api/react,visualstudiocode,windows

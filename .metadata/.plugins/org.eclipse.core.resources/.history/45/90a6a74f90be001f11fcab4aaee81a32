@@ -1,0 +1,13 @@
+package edu.pnu.controller;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class MemberController {
+	
+	@GetMapping("/members")
+	public ResponseEntity<?> getMember(){
+		return ResponseEntity.ok(memberService.getMembers());
+	}
+}
