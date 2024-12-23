@@ -19,8 +19,6 @@ public class MemberLoginService implements UserDetailsService{
 	@Autowired
 	private MemberRepository memRepo;
 	
-	@Autowired
-	private PasswordEncoder encoder;
 	
 	@Override
 	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
@@ -34,10 +32,6 @@ public class MemberLoginService implements UserDetailsService{
 						AuthorityUtils.createAuthorityList(member.getRole().toString()));
 	}
 	
-//	유저 회원가입 정보 저장(회원가입)
-	public void memSave(Member member) {
-		member.setPassword(encoder.encode(member.getPassword()));
-		member.setRole(Role.ROLE_USER);
-		memRepo.save(member);
-	}
+
+	
 }

@@ -1,0 +1,10 @@
+package edu.pnu.filter;
+
+import org.springframework.web.filter.OncePerRequestFilter;
+
+import edu.pnu.persistence.MemberRepository;
+
+public class JWTAuthenticationFilter extends OncePerRequestFilter{
+	//인가 설정을 위해 사용자의 Role 정보를읽어들이기 위한 객체 설정
+		private final MemberRepository memberRepository;
+}
