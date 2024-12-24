@@ -1,11 +1,13 @@
 package edu.pnu.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.IdClass;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,17 +22,20 @@ import lombok.ToString;
 @Entity
 public class Member {
 	@Id
-	private String userId;
-	
-	private String password;
-//	
-//	private String name;
-//	private String nickName;
-//	
-//	private String snsId;
-//	
-//	private int gender;
-	
-	@Enumerated(EnumType.STRING)
-	private Role role;
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // 자동 증가 ID
+    @Column(name = "ID")
+    private Long id; // 단일 기본 키
+
+    @Column(unique = true, nullable = true)
+    private String userId;
+
+    @Column(unique = true, nullable = true)
+    private String snsId;
+
+    private String password;
+    private String name;
+    private String nickName;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 }

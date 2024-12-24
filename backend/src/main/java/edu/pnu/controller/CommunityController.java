@@ -1,0 +1,29 @@
+package edu.pnu.controller;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+
+import edu.pnu.service.CommunityService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@RequiredArgsConstructor
+@RestController
+public class CommunityController {
+	private final CommunityService commuService;
+	
+	@GetMapping("/board")
+	public ResponseEntity<?> getBoards(){
+		log.info("모든 게시글 가져오기");
+		return ResponseEntity.ok(commuService.getBoards());
+	}
+	
+	@GetMapping("/board/{id}")
+	public ResponseEntity<?> getBoardId(@PathVariable Long id){
+		log.info("id맞는 게시글 가져오기");
+		return ResponseEntity.ok(commuService.getBoard(id));
+	}
+}

@@ -1,0 +1,79 @@
+package edu.pnu;
+
+import org.springframework.http.HttpHeaders;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+import org.springframework.stereotype.Component;
+
+import edu.pnu.domain.Community;
+import edu.pnu.domain.Member;
+import edu.pnu.domain.Role;
+import edu.pnu.persistence.CommunityRepository;
+import edu.pnu.persistence.MemberRepository;
+import edu.pnu.util.CustomMyUtil;
+import edu.pnu.util.JWTUtil;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+@Slf4j
+@RequiredArgsConstructor
+@Component
+public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+
+    private final MemberRepository memRepo;
+    private final CommunityRepository commuRepo;
+
+    @Override
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+                                        Authentication authentication) throws IOException, ServletException {
+
+        log.info("OAuth2SuccessHandler:onAuthenticationSuccess");
+
+        OAuth2User user = (OAuth2User) authentication.getPrincipal();
+
+        // 구글에서 사용자 정보 가져오기
+        String snsid = CustomMyUtil.getUsernameFromOAuth2User(user);  // SNS ID
+        String name = (String) user.getAttributes().get("name");       // 사용자 이름 (실제 이름)
+
+        if (snsid == null || name == null) {
+            log.error("onAuthenticationSuccess: Cannot retrieve snsId or name from oauth2user!");
+            throw new ServletException("Cannot retrieve snsId or name from oauth2user!");
+        }
+
+        log.info("Google User SNS ID: " + snsid);
+        log.info("Google User Name: " + name);
+
+        // Member 객체를 생성하고 저장
+        Member member = memRepo.save(Member.builder()
+                .snsId(snsid)
+                .nickName(name)
+                .role(Role.ROLE_USER)
+                .build());
+
+        // Community 객체를 생성하고 저장
+        for (int i = 0; i < 10; i++) {
+            commuRepo.save(Community.builder()
+                    .title("title" + (i + 1))
+                    .content("content" + (i + 1))
+                    .member(member)  // 저장된 Member 객체를 참조
+                    .likes(i + 1)
+                    .dislike(i + 1)
+                    .hit(i + 1)
+                    .build());
+        }
+
+        // JWT 토큰 생성
+        String jwtToken = JWTUtil.getJWT(snsid);
+
+        // JWT 토큰을 응답 헤더에 추가
+        response.addHeader(HttpHeaders.AUTHORIZATION, jwtToken);
+
+        super.onAuthenticationSuccess(request, response, authentication);
+    }
+}
