@@ -3,10 +3,15 @@ package edu.pnu.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import edu.pnu.domain.Community;
+import edu.pnu.domain.Member;
 import edu.pnu.service.CommunityService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -26,4 +31,18 @@ public class CommunityController {
 		log.info("id맞는 게시글 가져오기");
 		return ResponseEntity.ok(commuService.getBoard(id));
 	}
+	
+	@GetMapping("/insertBoard")
+	public void insertBoardView() {
+		log.info("게시글 작성뷰로 이동하기");
+	}
+	
+	@PostMapping("/insertBoard")
+	public String insertBord(@RequestBody Community community) {
+		
+		commuService.boardSave(community);
+		return "insertBoard";
+	}
+	
+
 }

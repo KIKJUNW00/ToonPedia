@@ -1,0 +1,39 @@
+package edu.pnu.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import edu.pnu.domain.Community;
+import edu.pnu.persistence.CommunityRepository;
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class CommunityService {
+	private final CommunityRepository commuRepo;
+	
+	//커뮤니티 게시판 데이터 모두 불러오기
+	public List<Community> getBoards() {
+		return commuRepo.findAll();
+	}
+	
+	//id별 게시판 데이터 불러오기
+	public Community getBoard(Long id) {
+		return commuRepo.findById(id).get();
+	}
+	
+	//게시판 글쓰기
+	public void boardSave(Community community) {
+		community.getId();
+		community.setTitle(null);
+		community.setContent(null);
+		community.setLikes(null);
+		community.setDislike(null);
+		community.setHit(null);
+		community.setCreateDate(null);
+		
+	}
+	
+	
+}

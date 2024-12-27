@@ -23,28 +23,31 @@ public class test implements ApplicationRunner{
 	
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		  // Member 객체 생성 및 저장
-	    Member member = Member.builder()
-	            .userId("member")
-	            .password(encoder.encode("1234"))
-	            .name("김준우")
-	            .nickName("홍길동")
-	            .snsId(null)
-	            .role(Role.ROLE_USER)
-	            .build();
-	    
-	    memRepo.save(member); // Member 객체 먼저 저장
+		 // Member 객체 생성 및 저장
+        Member member = Member.builder()
+                .userId("member23")
+                .password(encoder.encode("1234"))
+                .nickName("홍길동1")
+                .snsId(null)
+                .role(Role.ROLE_USER)
+                .build();
+        
+        // Member 객체 저장
+        memRepo.save(member);
 
-	    // Community 객체 저장
-	    for (int i = 0; i < 10; i++) {
-	        commuRepo.save(Community.builder()
-	                .title("title" + (i + 1))
-	                .content("content" + (i + 1))
-	                .member(member)  // 이미 저장된 Member 객체를 참조
-	                .likes(i + 1)
-	                .dislike(i + 1)
-	                .hit(i + 1)
-	                .build());
-	    }
+
+//        for (int i = 0; i < 30; i++) {
+//            Community community = Community.builder()
+//                    .title("Title " + (i + 1))
+//                    .content("Content " + (i + 1))
+//                    .member(member)
+//                    .likes(0)
+//                    .hit(0)
+//                    .build();
+//            commuRepo.save(community);
+            
+        System.out.println("@#############"+ member.getNickName());
+
+//	}
 	}
 }

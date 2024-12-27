@@ -1,5 +1,7 @@
 package edu.pnu.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
@@ -22,9 +24,21 @@ public class MemberLoginService implements UserDetailsService{
 	
 	@Override
 	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-		//memRepo에서 사용자 정보를 검색해서 
-				Member member = memRepo.findById(userId)
-						.orElseThrow(()->new UsernameNotFoundException("Not Found"));
+//		memRepo에서 사용자 정보를 검색해서 
+//				Member member = memRepo.findByUserId(userId)
+//						.orElseThrow(()->new UsernameNotFoundException("Not Found"));
+		
+//		 // userId로 검색 시도
+	    Member member = memRepo.findById(userId).orElseThrow();
+	    
+	    // userId로 검색 실패 시 snsId로 검색
+//	    if (!optMember.isPresent()) {
+//	        optMember = memRepo.findBySnsId(userId);
+//	    }
+	    
+	 // userId와 snsId로 모두 검색 실패 시 예외 발생
+//	    Member member = optMember.orElseThrow(() -> new UsernameNotFoundException("Not Found"));
+	    
 				
 				//UserDetails 타임의 객체를 생성해서 리턴(o.s.s.core.userdetails.User)
 				//여기에서 리턴된 User 객체와 로그인 요청 정보를 비교한다.

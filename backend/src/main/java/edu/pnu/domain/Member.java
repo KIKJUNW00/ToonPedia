@@ -22,19 +22,16 @@ import lombok.ToString;
 @Entity
 public class Member {
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // 자동 증가 ID
-    @Column(name = "ID")
-    private Long id; // 단일 기본 키
-
     @Column(unique = true, nullable = true)
     private String userId;
+	private String password;
 
-    @Column(unique = true, nullable = true)
+	private String nickName;
+
+	
+	@Column(unique = true, nullable = true)
     private String snsId;
 
-    private String password;
-    private String name;
-    private String nickName;
 
     @Enumerated(EnumType.STRING)
     private Role role;

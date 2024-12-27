@@ -22,4 +22,11 @@ public class CommunityService {
 	public Community getBoard(Long id) {
 		return commuRepo.findById(id).get();
 	}
+	
+	//게시판 글쓰기
+	public void boardSave(Community community) {
+		commuRepo.save(community);
+	}
+	
+	
 }
