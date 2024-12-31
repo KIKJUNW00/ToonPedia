@@ -22,7 +22,6 @@ import lombok.ToString;
 @Entity
 public class Member {
 	@Id
-    @Column(unique = true, nullable = true)
     private String userId;
 	private String password;
 

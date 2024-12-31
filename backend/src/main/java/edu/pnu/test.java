@@ -25,8 +25,8 @@ public class test implements ApplicationRunner{
 	public void run(ApplicationArguments args) throws Exception {
 		 // Member 객체 생성 및 저장
         Member member = Member.builder()
-                .userId("member23")
-                .password(encoder.encode("1234"))
+                .userId("member01")
+                .password(encoder.encode("123456a"))
                 .nickName("홍길동1")
                 .snsId(null)
                 .role(Role.ROLE_USER)

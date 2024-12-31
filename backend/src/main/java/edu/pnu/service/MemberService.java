@@ -28,4 +28,12 @@ public class MemberService {
 		member.setRole(Role.ROLE_USER);
 		memRepo.save(member);
 	}
+	
+	public List<Member> getMebers(){
+		return memRepo.findAll();
+	}
+	
+	public Member getMember(String username) {
+		return memRepo.findById(username).get();
+	}
 }

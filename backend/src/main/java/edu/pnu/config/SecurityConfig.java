@@ -1,5 +1,7 @@
 package edu.pnu.config;
 
+import java.net.http.HttpHeaders;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -8,6 +10,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.intercept.AuthorizationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import edu.pnu.OAuth2SuccessHandler;
 import edu.pnu.filter.JWTAuthenticationFilter;
@@ -31,15 +36,10 @@ public class SecurityConfig  {
 
 		// CSRF 보호 비활성화(사이트간 요청 위조)
 		http.csrf(cf -> cf.disable());
-
+		http.cors(co -> co.configurationSource(corsSource()));
 		
 		//Form을 이용한 로그인을 사용하지 않겠다는 설정
-//		http.formLogin(frmLogin -> frmLogin.disable());
-		
-//		// 기본 로그인 기능을 사용(내가 만든 로그인화면 사용)
-		http.formLogin(form -> 
-				form.loginPage("/login")
-					.defaultSuccessUrl("/index", true));
+		http.formLogin(frmLogin -> frmLogin.disable());
 		
 		// 구글 로그인을 실행하면 DefaultOAuth2UserService가 실행됨.
 				// 로그인에 성공했을 때 추가적인 작업이 필요하면 DefaultOAuth2UserService를 상속한 클래스의
@@ -48,9 +48,6 @@ public class SecurityConfig  {
 //				.loginPage("/login")
 //				.defaultSuccessUrl("/loginSuccess", true));
 				
-		
-		//로그인정보가 일치하지 않을시 로그
-//		http.exceptionHandling(ex -> ex.accessDeniedPage("/accessDenied"));
 
 		http.logout(logout -> 
 			logout.invalidateHttpSession(true) // 현재 브라우저와 연결된 세션 강제 종료
@@ -60,8 +57,9 @@ public class SecurityConfig  {
 		// 권한 없이 접근 가능한 URL 설정
 				http.authorizeHttpRequests(auth -> auth
 					.requestMatchers("/h2-console/**").permitAll() // H2-console 접근 허용
-					.requestMatchers("/", "/login","/members","/board","/join").permitAll() // 인증 없이 접근 가능
-					.anyRequest().authenticated() // 그 외 모든 요청은 인증 필요
+//					.requestMatchers("/", "/login","/members","/board","/join").permitAll() // 인증 없이 접근 가능
+//					.anyRequest().authenticated() // 그 외 모든 요청은 인증 필요
+					.anyRequest().permitAll()
 				);
 		
 				
@@ -92,5 +90,18 @@ public class SecurityConfig  {
 		return http.build();
 
 	}
+	
+	private CorsConfigurationSource corsSource() {
+    	CorsConfiguration config = new CorsConfiguration();
+    	config.addAllowedOriginPattern(CorsConfiguration.ALL);
+    	config.addAllowedMethod(CorsConfiguration.ALL);
+    	config.addAllowedHeader(CorsConfiguration.ALL);
+    	config.addExposedHeader("Authorization");
+    	config.setAllowCredentials(true);	// 쿠키 전송 허용 
+
+    	UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    	source.registerCorsConfiguration("/**", config);
+    	return source;
+    }
 	
 }

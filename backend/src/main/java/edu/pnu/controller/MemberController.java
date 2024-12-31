@@ -20,15 +20,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
 public class MemberController {
 
 	private final MemberService memService;
-
-	@GetMapping("/") // 루트 URL에 대한 요청을 처리
-	public String index() {
-		return "index"; // index.html을 반환
-	}
 
 	// 회원가입
 	@GetMapping("/join")
@@ -47,44 +41,10 @@ public class MemberController {
         }
     }
 	
-	// 회원가입후 이동페이지
-//	@PostMapping("/join")
-//	// requestbody는 react처리 위해 사용
-//	public String joinProc(@RequestBody Member member) {
-//
-//		memService.memSave(member);
-//		return "redirect:/index";
-//	}
-//
-//	@PostMapping("/join")
-//	public ResponseEntity<?> joinProc(@RequestBody Member member) {
-//	    try {
-//	        memService.memSave(member);
-//	        return ResponseEntity.ok("회원가입 성공");
-//	    } catch (Exception e) {
-//	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("회원가입 실패: " + e.getMessage());
-//	    }
-//	}
-
-	
 	// 멤버 목록 가져오기
 	@GetMapping("/members")
 	public ResponseEntity<?> getMember() {
 		return ResponseEntity.ok(memService.getMembers());
 	}
 
-	// 로그인 페이지 요청
-	@GetMapping("/login")
-	public String loginPage() {
-	    return "login";  // login.html 페이지를 반환
-	}
-
-	// 로그인 성공 시 리디렉션 처리 (Spring Security가 자동으로 처리)
-	@PostMapping("/login")
-	public ResponseEntity<?> login(@RequestBody Member member) {
-	    log.info("로그인 성공");
-	    return ResponseEntity.ok("로그인성공");
-	}
-
-	
 }
