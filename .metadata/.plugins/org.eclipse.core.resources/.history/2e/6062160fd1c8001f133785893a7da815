@@ -1,0 +1,50 @@
+package edu.pnu.service;
+
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import edu.pnu.domain.Community;
+import edu.pnu.persistence.CommunityRepository;
+import edu.pnu.persistence.MemberRepository;
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class CommunityService {
+	private final CommunityRepository commuRepo;
+	private final MemberRepository memRepo;
+	
+	//커뮤니티 게시판 데이터 모두 불러오기
+	public List<Community> getBoards() {
+		return commuRepo.findAll();
+	}
+	
+	//id별 게시판 데이터 불러오기(게시글 상세보기+조회수up)
+	public Community getBoard(Long id) {
+		Community community = commuRepo.findById(id).get();
+		
+		community.setHit(community.getHit()+1);
+		
+		return commuRepo.save(community);
+	}
+	
+	//게시판 글쓰기
+	public void insertBoard(Community community) {
+		
+		// Member 엔티티에서 userId와 nickName 가져오기
+	    String userId = community.getMember().getUserId();
+	    String nickName = community.getMember().getNickName();
+
+	    // Community 객체에 userId와 nickName 설정
+	    community.setNickName(nickName); // nickName 설정
+//	    community.setMember(community.getMember()); // Member 엔티티를 다시 설정 (필요할 수 있음)
+
+		
+		
+		commuRepo.save(community);
+	}
+	
+	
+}

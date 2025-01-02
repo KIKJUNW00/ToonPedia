@@ -1,0 +1,60 @@
+package edu.pnu.service;
+
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+import edu.pnu.domain.Community;
+import edu.pnu.domain.Member;
+import edu.pnu.persistence.CommunityRepository;
+import edu.pnu.persistence.MemberRepository;
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class CommunityService {
+	private final CommunityRepository commuRepo;
+	private final MemberRepository memberRepo;
+
+	
+	//커뮤니티 게시판 데이터 모두 불러오기
+	public List<Community> getBoards() {
+		return commuRepo.findAll();
+	}
+	
+	//id별 게시판 데이터 불러오기(게시글 상세보기+조회수up)
+	public Community getBoard(Long id) {
+		Community community = commuRepo.findById(id).get();
+		
+		community.setHit(community.getHit()+1);
+		
+		return commuRepo.save(community);
+	}
+	
+	//게시판 글쓰기
+	public void insertBoard(Community community) {
+		
+		// 현재 로그인된 사용자 정보 가져오기
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserId = authentication.getName(); // 현재 로그인된 사용자의 userId (username)
+	    
+     // 로그인된 사용자 정보로 Member 엔티티 조회
+        Member currentUser = memberRepo.findById(currentUserId)
+                .orElseThrow(() -> new UsernameNotFoundException("로그인된 사용자를 찾을 수 없습니다."));
+
+        // Community 객체에 Member와 관련 정보 설정
+        community.setMember(currentUser);
+        community.setNickName(currentUser.getNickName());
+
+        // Community 저장
+        commuRepo.save(community);        
+	 
+	}
+	
+	
+	
+}

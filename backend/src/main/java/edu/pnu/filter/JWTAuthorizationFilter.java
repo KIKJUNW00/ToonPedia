@@ -53,7 +53,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter{
 		    opt = memberRepository.findById(userId);
 		}
 
-		// snsId 검색 (userId가 없거나 검색 실패 시)
+//		 snsId 검색 (userId가 없거나 검색 실패 시)
 		if (!opt.isPresent() && snsId != null) {
 		    opt = memberRepository.findBySnsId(snsId);
 		}

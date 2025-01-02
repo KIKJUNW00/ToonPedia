@@ -1,6 +1,11 @@
 package edu.pnu.controller;
 
+import java.io.Console;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -8,10 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.pnu.domain.Community;
-import edu.pnu.domain.Member;
 import edu.pnu.service.CommunityService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -19,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 public class CommunityController {
 	private final CommunityService commuService;
+	
 	
 	@GetMapping("/board")
 	public ResponseEntity<?> getBoards(){
@@ -35,9 +39,15 @@ public class CommunityController {
 	
 	//게시글 작성
 	@PostMapping("/insertBoard")
-	public ResponseEntity<?> insertBord(@RequestBody Community community) {
+	public ResponseEntity<?> insertBord(@RequestBody Community community, @AuthenticationPrincipal User user) {
 		
-		commuService.insertBoard(community);
+		log.info("Authenticated User: " + user);
+		
+		if (user == null) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+		
+		commuService.insertBoard(community, user.getUsername());
 		return ResponseEntity.ok("게시글 작성완료");
 	}
 	

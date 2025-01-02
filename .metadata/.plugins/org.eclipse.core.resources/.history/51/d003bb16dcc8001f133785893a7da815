@@ -1,0 +1,52 @@
+package edu.pnu.controller;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import edu.pnu.domain.Community;
+import edu.pnu.service.CommunityService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@RequiredArgsConstructor
+@RestController
+public class CommunityController {
+	private final CommunityService commuService;
+	
+	
+	@GetMapping("/board")
+	public ResponseEntity<?> getBoards(){
+		log.info("모든 게시글 가져오기");
+		return ResponseEntity.ok(commuService.getBoards());
+	}
+	
+	//상세보기
+	@GetMapping("/board/{id}")
+	public ResponseEntity<?> getBoardId(@PathVariable Long id){
+		log.info("id맞는 게시글 가져오기");
+		return ResponseEntity.ok(commuService.getBoard(id));
+	}
+	
+	//게시글 작성
+	@PostMapping("/insertBoard")
+	public ResponseEntity<?> insertBord(@RequestBody Community community, @AuthenticationPrincipal User user) {
+		
+		if (user == null) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+		
+//		commuService.insertBoard(community, user.getUsername());
+		commuService.insertBoard(community, userId);
+		return ResponseEntity.ok("게시글 작성완료");
+	}
+	
+
+}

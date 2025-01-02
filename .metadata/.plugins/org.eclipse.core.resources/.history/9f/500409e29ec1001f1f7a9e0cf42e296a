@@ -1,8 +1,0 @@
-package edu.pnu.config;
-
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-//react연동
-public class CustomConfig implements WebMvcConfigurer{
-
-}

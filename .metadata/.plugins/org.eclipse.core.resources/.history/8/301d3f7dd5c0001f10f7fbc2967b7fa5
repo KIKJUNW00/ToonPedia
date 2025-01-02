@@ -1,7 +1,0 @@
-package edu.pnu.filter;
-
-import org.springframework.web.filter.OncePerRequestFilter;
-
-public class JWTAuthenticationFilter extends OncePerRequestFilter{
-
-}
