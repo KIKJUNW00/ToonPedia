@@ -19,8 +19,21 @@ export default function BoardWrite({ onClose }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+    const token = localStorage.getItem('authToken');
+
+    if (!token) {
+            alert("로그인이 필요합니다.");
+            return; // 토큰이 없으면 더 이상 진행하지 않습니다.
+        }
+    
         try {
-            await axios.post('http://10.125.121.117:8080/insertBoard', { title, content });
+            await axios.post('http://10.125.121.117:8080/insertBoard', { title, content },
+                {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,  // Bearer 토큰 방식으로 인증
+                      }
+                }
+            )
             alert('게시글이 등록되었습니다.');
             setTitle('');
             setContent('');
