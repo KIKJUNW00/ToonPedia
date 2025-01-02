@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Close from '../Image/닫기.png';
 import BoardClose from './BoardClose';
 import axios from 'axios';
+// import { body } from 'framer-motion/client';
 
 export default function BoardWrite({ onClose }) {
     const [writeclose, setWriteClose] = useState(false);
@@ -19,8 +20,35 @@ export default function BoardWrite({ onClose }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+    const token = localStorage.getItem('authToken');
+    console.log('error : ' , token);
+    if (!token) {
+            alert("로그인이 필요합니다.");
+            return; // 토큰이 없으면 더 이상 진행 X
+        }
+    
         try {
-            await axios.post('http://10.125.121.117:8080/insertBoard', { title, content });
+            // await axios.post('http://10.125.121.117:8080/insertBoard', { title, content },
+            //     {
+            //         headers: {
+            //             'Authorization': `Bearer ${token}`, // Bearer 토큰 방식으로 인증
+            //             'Content-Type': 'application/json'  
+            //           }
+            //     }
+            // )
+
+            await axios.post('http://10.125.121.117:8080/insertBoard', 
+                {
+                    headers: {
+                        'Authorization': `Bearer ${token}`, // Bearer 토큰 방식으로 인증
+                        'Content-Type': 'application/json'  
+                      },
+                    body: JSON.stringify({
+                        title,
+                        content
+                    })
+                }
+            )
             alert('게시글이 등록되었습니다.');
             setTitle('');
             setContent('');

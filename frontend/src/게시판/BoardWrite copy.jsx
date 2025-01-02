@@ -20,17 +20,18 @@ export default function BoardWrite({ onClose }) {
         e.preventDefault();
 
     const token = localStorage.getItem('authToken');
-
+    console.log('error : ' , token);
     if (!token) {
             alert("로그인이 필요합니다.");
-            return; // 토큰이 없으면 더 이상 진행하지 않습니다.
+            return; // 토큰이 없으면 더 이상 진행 X
         }
     
         try {
             await axios.post('http://10.125.121.117:8080/insertBoard', { title, content },
                 {
                     headers: {
-                        'Authorization': `Bearer ${token}`,  // Bearer 토큰 방식으로 인증
+                        'Authorization': `Bearer ${token}`, // Bearer 토큰 방식으로 인증
+                        'Content-Type': 'application/json'  
                       }
                 }
             )

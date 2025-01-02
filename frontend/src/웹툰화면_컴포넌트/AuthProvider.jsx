@@ -14,7 +14,6 @@ export const AuthProvider = ( {children} ) => {
         setIsLoggedIn(false); // 전역 상태 초기화
       };
 
-
     return (
         <AuthContext.Provider value={{isLoggedIn, login, logout }}>
             {children}

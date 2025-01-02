@@ -44,10 +44,10 @@ export default function Login() {
         console.log('로그인 성공:', response.data);
 
         // 전역 상태에 로그인 반영
-        login(response.data.token); // 전역 상태에 토큰 저장
+        login(response.headers.get('Authorization')); // 전역 상태에 토큰 저장
 
         // 로컬 스토리지에 토큰 저장 (필요하면 사용)
-        localStorage.setItem('authToken', response.data.token);
+        localStorage.setItem('authToken', response.headers.get('Authorization'));
 
         // 메인 페이지로 이동
         navigate('/');
