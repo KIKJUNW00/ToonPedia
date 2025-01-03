@@ -1,6 +1,8 @@
 package edu.pnu.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,9 +27,11 @@ public class commentController {
 		return ResponseEntity.ok(commentService.getComments());
 	}
 	
-	@PostMapping("/write") //댓글쓰기
-	public ResponseEntity<?> commentWrite(@RequestBody Comment comment){
-		commentService.commentSave(comment);
+	@PostMapping("/commentWrite") //댓글쓰기
+	public ResponseEntity<?> commentWrite(@RequestBody Comment comment, @AuthenticationPrincipal User user){
+		commentService.commentSave(comment, user.getUsername());
 		return ResponseEntity.ok("댓글 작성완료");
 	}
+	
+	
 }

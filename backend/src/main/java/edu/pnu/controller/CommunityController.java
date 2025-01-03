@@ -1,7 +1,5 @@
 package edu.pnu.controller;
 
-import java.io.Console;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -39,7 +37,7 @@ public class CommunityController {
 	
 	//게시글 작성
 	@PostMapping("/insertBoard")
-	public ResponseEntity<?> insertBord(@RequestBody Community community, @AuthenticationPrincipal User user) {
+	public ResponseEntity<?> insertBoard(@RequestBody Community community, @AuthenticationPrincipal User user) {
 		
 		log.info("Authenticated User: " + user);
 		
@@ -51,5 +49,21 @@ public class CommunityController {
 		return ResponseEntity.ok("게시글 작성완료");
 	}
 	
+	
+	@PostMapping("/updateBoard")
+	public ResponseEntity<?> updateBoard(@RequestBody Community community) {
+		
+		commuService.updateBoard(community);
+		
+		return ResponseEntity.ok("게시글 업데이트완료");
+	}
+		
+	
+	public ResponseEntity<?> deleteBoard(Long id){
+		
+		commuService.deleteBoard(id);
+		
+		return ResponseEntity.ok("게시글 삭제완료");
+	}
 
 }

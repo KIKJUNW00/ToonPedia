@@ -2,20 +2,21 @@ package edu.pnu.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import edu.pnu.domain.Member;
 import edu.pnu.domain.Role;
 import edu.pnu.persistence.MemberRepository;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class MemberService {
-	@Autowired
-	private MemberRepository memRepo;
 	
-	@Autowired
+	private MemberRepository memRepo;
+
+	
 	private PasswordEncoder encoder;
 	
 	public List<Member> getMembers() {
@@ -33,7 +34,6 @@ public class MemberService {
 		return memRepo.findAll();
 	}
 	
-	public Member getMember(String username) {
-		return memRepo.findById(username).get();
-	}
+	
+	
 }

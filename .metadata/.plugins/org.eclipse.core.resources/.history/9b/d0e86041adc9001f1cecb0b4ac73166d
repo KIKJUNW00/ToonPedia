@@ -1,0 +1,21 @@
+package edu.pnu.domain.dto;
+
+import java.util.Date;
+
+import edu.pnu.domain.Community;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter @Setter @ToString
+public class MyPageDTO {
+	private Long id;
+	
+	private String nickName;
+	
+	 public MyPageDTO(Community community) {
+	    	this.id = community.getId();
+			this.nickName = community.getMember().getNickName();
+			
+		}
+}

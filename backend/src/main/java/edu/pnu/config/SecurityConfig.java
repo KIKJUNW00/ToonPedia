@@ -57,7 +57,7 @@ public class SecurityConfig  {
 		// 권한 없이 접근 가능한 URL 설정
 				http.authorizeHttpRequests(auth -> auth
 					.requestMatchers("/h2-console/**").permitAll() // H2-console 접근 허용
-//					.requestMatchers("/", "/login","/members","/board","/join").permitAll() // 인증 없이 접근 가능
+//					.requestMatchers("/", "/login","/members","/board/**","/join").permitAll() // 인증 없이 접근 가능
 //					.anyRequest().authenticated() // 그 외 모든 요청은 인증 필요
 					.anyRequest().permitAll()
 				);

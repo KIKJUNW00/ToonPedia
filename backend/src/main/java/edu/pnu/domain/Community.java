@@ -1,6 +1,8 @@
 package edu.pnu.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -11,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -35,7 +38,9 @@ public class Community {
     @JoinColumn(name = "user_Id") // 외래 키 컬럼 이름 설정 
     private Member member; // Member 엔티티 참조
     
-
+    @OneToMany(mappedBy = "community", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
+    
     private String title;
     private String content;
     
@@ -50,3 +55,4 @@ public class Community {
     @Column(columnDefinition = "timestamp default current_timestamp")
     private Date createDate = new Date();
 }
+	

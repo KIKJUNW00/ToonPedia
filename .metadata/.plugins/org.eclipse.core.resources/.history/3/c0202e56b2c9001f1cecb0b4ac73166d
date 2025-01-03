@@ -1,0 +1,50 @@
+package edu.pnu.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import edu.pnu.domain.Member;
+import edu.pnu.domain.MyPage;
+import edu.pnu.domain.Role;
+import edu.pnu.persistence.MemberRepository;
+import edu.pnu.persistence.MyPageRepository;
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class MemberService {
+	
+	private MemberRepository memRepo;
+	private MyPageRepository mypageRepo;
+	
+	private PasswordEncoder encoder;
+	
+	public List<Member> getMembers() {
+	    return memRepo.findAll(); // 모든 멤버 반환
+	}
+	
+//	유저 회원가입 정보 저장(회원가입)
+	public void memSave(Member member) {
+		member.setPassword(encoder.encode(member.getPassword()));
+		member.setRole(Role.ROLE_USER);
+		memRepo.save(member);
+	}
+	
+	public List<Member> getMebers(){
+		return memRepo.findAll();
+	}
+	
+	public void getNick(MyPage mypage, String username) {
+		Member member = memRepo.findById(username).get();
+		
+		mypage.setMember(member);
+		
+		mypageRepo.save(mypage);
+	}
+	
+	
+}
