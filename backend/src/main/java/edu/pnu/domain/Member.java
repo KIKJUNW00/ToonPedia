@@ -33,8 +33,11 @@ public class Member {
 
 	private String nickName;
 
+//	@OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Community> communities = new ArrayList<>(); // 양방향 관계 설정
+	
 	@OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Community> communities = new ArrayList<>(); // 양방향 관계 설정
+	private List<Favorite> favorites = new ArrayList<>(); // 양방향 관계 설정
 	
 	@Column(unique = true, nullable = true)
     private String snsId;

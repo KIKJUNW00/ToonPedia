@@ -50,6 +50,19 @@ public class CommunityService {
 		
 		return new CommunityDTO(community);
 		
+	}
+	
+	//좋아요증가
+	public CommunityDTO updateLike(Long id) {
+		Community community = commuRepo.findById(id).get();
+		
+		community.setLikes(community.getLikes());
+		
+		commuRepo.save(community);
+		
+		
+		return new CommunityDTO(community);
+		
 		
 	}
 	

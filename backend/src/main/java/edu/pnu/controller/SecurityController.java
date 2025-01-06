@@ -7,12 +7,11 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.pnu.domain.Member;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+
 
 @RestController
 public class SecurityController {
@@ -42,16 +41,4 @@ public class SecurityController {
 		return ResponseEntity.ok().header(HttpHeaders.AUTHORIZATION, jwtToken).build();
 	}
 	
-	// 로그인 페이지 요청
-//	@GetMapping("/login")
-//	public String loginPage() {
-//	    return "login";  // login.html 페이지를 반환
-//	}
-
-	// 로그인 성공 시 리디렉션 처리 (Spring Security가 자동으로 처리)
-//	@PostMapping("/login")
-//	public ResponseEntity<?> login(@RequestBody Member member) {
-//	    
-//	    return ResponseEntity.ok("로그인성공");
-//	}
 }

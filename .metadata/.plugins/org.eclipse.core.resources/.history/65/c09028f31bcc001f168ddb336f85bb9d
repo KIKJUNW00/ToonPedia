@@ -1,0 +1,44 @@
+package edu.pnu.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import edu.pnu.domain.Favorite;
+import edu.pnu.domain.Member;
+import edu.pnu.persistence.FavoriteRepository;
+import edu.pnu.persistence.MemberRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Service
+@Slf4j
+@RequiredArgsConstructor
+public class FavoriteService {
+	private final FavoriteRepository favoriteRepo;
+	private final MemberRepository memberRepo;
+	
+	//관심웹툰 저장
+	public void favoriteWebtoons(Favorite favorite, String username) {
+		Member member = memberRepo.findById(username).get();
+		
+		favorite.setMember(member);
+		
+		favoriteRepo.save(favorite);
+	}
+	
+//	유저별 관심웹툰 찾아서 뿌리기
+	public List<Favorite> UserFavorite(Long id) {
+		// 사용자 조회
+	    Member member = memberRepo.findAll();
+
+	    // 사용자 관심 웹툰 목록 반환
+	    return member.getFavorites(); // 양방향 관계를 통해 관심 웹툰 목록 가져오기 
+		
+	}
+	
+//	관심웹툰 삭제
+	public void deleteFavorite(Long id) {
+		
+	}
+}

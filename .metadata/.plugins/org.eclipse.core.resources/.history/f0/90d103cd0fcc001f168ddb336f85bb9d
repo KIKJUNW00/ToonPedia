@@ -1,0 +1,26 @@
+package edu.pnu.service;
+
+import org.springframework.stereotype.Service;
+
+import edu.pnu.domain.Favorite;
+import edu.pnu.domain.Member;
+import edu.pnu.persistence.FavoriteRepository;
+import edu.pnu.persistence.MemberRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Service
+@Slf4j
+@RequiredArgsConstructor
+public class FavoriteService {
+	private final FavoriteRepository favoriteRepo;
+	private final MemberRepository memberRepo;
+	
+	public void favoriteWebtoons(Favorite favorite, String username) {
+		Member member = memberRepo.findById(username).get();
+		
+		favorite.setMember(member);
+		
+		favoriteRepo.save(favorite);
+	}
+}

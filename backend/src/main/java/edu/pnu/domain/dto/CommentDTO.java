@@ -12,6 +12,8 @@ import lombok.ToString;
 public class CommentDTO {
     private Long id;
     
+    private Long community_id;
+    
     private String nickName;
     
     private Integer likes;
@@ -20,9 +22,13 @@ public class CommentDTO {
 
 	private String content;
     
+	// 기본 생성자
+    public CommentDTO() {}
+	
     public CommentDTO(Comment comment) {
     	this.id = comment.getId();
 		this.nickName = comment.getMember().getNickName();
+		this.community_id = comment.getCommunity().getId();
 		this.content = comment.getContent();
 		this.likes = comment.getLikes();
 		this.createDate = comment.getCreateDate();

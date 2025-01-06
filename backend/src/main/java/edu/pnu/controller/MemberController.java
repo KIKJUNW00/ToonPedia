@@ -2,12 +2,17 @@ package edu.pnu.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.pnu.domain.Member;
+import edu.pnu.domain.Favorite;
+import edu.pnu.service.FavoriteService;
 import edu.pnu.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,13 +22,14 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 public class MemberController {
 
+	private final FavoriteService favoriteService;
 	private final MemberService memService;
 
 	// 회원가입
-	@GetMapping("/join")
-	public String showJoinPage() {
-	    return "join";  // 회원가입 페이지를 보여줌 (join.html 등)
-	}
+//	@GetMapping("/join")
+//	public String showJoinPage() {
+//	    return "join";  // 회원가입 페이지를 보여줌 (join.html 등)
+//	}
 
 	// 회원가입 처리
     @PostMapping("/join")
@@ -42,6 +48,34 @@ public class MemberController {
 		return ResponseEntity.ok(memService.getMembers());
 	}
 	
+//	관심웹툰 등록하기
+	@PostMapping("/favorite")
+	public ResponseEntity<?> favoriteWebtoons(@RequestBody Favorite favorites, @AuthenticationPrincipal User user){
+		
+		
+		favoriteService.favoriteWebtoons(favorites, user.getUsername());
+		return ResponseEntity.ok("관심웹툰 등록완료");
+	}
 	
-
+//	내일 해야할것
+//	@GetMapping("/board/{id}")
+//	public ResponseEntity<?> getBoardId(@PathVariable Long id){
+//		log.info("id맞는 게시글 가져오기");
+//		return ResponseEntity.ok(commuService.getBoard(id));
+//	}
+//	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

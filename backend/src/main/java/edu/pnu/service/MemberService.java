@@ -14,10 +14,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MemberService {
 	
-	private MemberRepository memRepo;
-
+	private final MemberRepository memRepo;
 	
-	private PasswordEncoder encoder;
+	private final PasswordEncoder encoder;
 	
 	public List<Member> getMembers() {
 	    return memRepo.findAll(); // 모든 멤버 반환

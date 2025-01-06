@@ -1,0 +1,16 @@
+spring.application.name=backend
+
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.url=jdbc:mysql://localhost:3306/toonpedia
+spring.datasource.username=root
+spring.datasource.password=
+
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.database-platform=org.hibernate.dialect.MySQL8Dialect
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+
+#구글 로그인
+spring.security.oauth2.client.registration.google.client-id=
+spring.security.oauth2.client.registration.google.client-secret=
+spring.security.oauth2.client.registration.google.scope=email,profile

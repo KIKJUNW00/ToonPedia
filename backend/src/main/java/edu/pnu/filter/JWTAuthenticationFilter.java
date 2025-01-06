@@ -64,7 +64,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		// username으로 JWT를 생성해서 Response Header - Authorization에 담아서 돌려준다.
 		// 이것은 하나의 예시로서 필요에 따라 추가 정보를 담을 수 있다.
 		String token = JWT.create()
-					.withExpiresAt(new Date(System.currentTimeMillis()+1000*60*100))
+					.withExpiresAt(new Date(System.currentTimeMillis()+1000*60*60*24))
 					.withClaim("userId", user.getUsername())
 					.withClaim("snsId", user.getUsername())
 					.sign(Algorithm.HMAC256("edu.pnu.jwt"));

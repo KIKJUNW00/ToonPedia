@@ -13,7 +13,7 @@ import edu.pnu.persistence.CommunityRepository;
 import edu.pnu.persistence.MemberRepository;
 import lombok.RequiredArgsConstructor;
 
-@Component
+//@Component
 @RequiredArgsConstructor
 @Transactional
 public class test implements ApplicationRunner{

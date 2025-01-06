@@ -35,6 +35,13 @@ public class CommunityController {
 		return ResponseEntity.ok(commuService.getBoard(id));
 	}
 	
+	//좋아요증가
+	@PostMapping("/board/{id}")
+	public ResponseEntity<?> updateLike(@PathVariable Long id){
+		log.info("id맞는 게시글 가져오기");
+		return ResponseEntity.ok(commuService.updateLike(id));
+	}
+	
 	//게시글 작성
 	@PostMapping("/insertBoard")
 	public ResponseEntity<?> insertBoard(@RequestBody Community community, @AuthenticationPrincipal User user) {

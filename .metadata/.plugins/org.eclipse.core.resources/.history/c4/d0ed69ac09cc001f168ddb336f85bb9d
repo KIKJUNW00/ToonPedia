@@ -1,0 +1,47 @@
+package edu.pnu.controller;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import edu.pnu.domain.Comment;
+import edu.pnu.domain.dto.CommentDTO;
+import edu.pnu.service.commentService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@RequiredArgsConstructor
+@RestController
+public class commentController {
+	
+	private final commentService commentService;
+	
+	
+	@GetMapping("/comment/{id}")
+	public ResponseEntity<?> getComments(){
+		log.info("모든 댓글 가져오기");
+		return ResponseEntity.ok(commentService.getComments());
+	}
+	
+	@PostMapping("/commentWrite") //댓글쓰기
+	public ResponseEntity<?> commentWrite(@RequestBody CommentDTO dto, @AuthenticationPrincipal User user){
+		
+		log.info("Authenticated User: " + user);
+		
+		if (user == null) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+		log.info("Received Comment: " + dto);
+		
+		commentService.commentSave(dto, user.getUsername());
+		return ResponseEntity.ok("댓글 작성완료");
+	}
+	
+	
+}

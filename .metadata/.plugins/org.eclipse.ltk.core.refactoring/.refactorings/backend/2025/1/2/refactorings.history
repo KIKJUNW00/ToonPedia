@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;edu.pnu.domain.favorite&apos; to &apos;Favorite&apos;&#x0D;&#x0A;- Original project: &apos;backend&apos;&#x0D;&#x0A;- Original element: &apos;edu.pnu.domain.favorite&apos;&#x0D;&#x0A;- Renamed element: &apos;edu.pnu.domain.Favorite&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;favorite&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;edu.pnu.domain{favorite.java[favorite" matchStrategy="1" name="Favorite" qualified="false" references="true" similarDeclarations="false" stamp="1736155132623" textual="false" version="1.0"/>
+</session>

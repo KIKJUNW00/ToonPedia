@@ -21,7 +21,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Getter @Setter 
-//@ToString
+@ToString
 @Entity @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -35,7 +35,7 @@ public class Comment {
     private Community community; // Member 엔티티 참조
 
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST) // 다대일 관계 설정
-	@JoinColumn(name = "member_id") // 외래 키 컬럼 이름 설정 
+	@JoinColumn(name = "user_id") // 외래 키 컬럼 이름 설정 
 	private Member member; // Member 엔티티 참조
 	
 	private String content;
