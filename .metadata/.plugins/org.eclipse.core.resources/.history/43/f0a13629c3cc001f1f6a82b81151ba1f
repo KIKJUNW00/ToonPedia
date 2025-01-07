@@ -1,0 +1,13 @@
+package edu.pnu.domain.dto;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter @Setter @ToString
+public class FavoriteDTO {
+	
+	private String name; // 웹툰 이름
+	private String code; // 웹툰 코드
+	private String picture; // 웹툰 타이틀 표지
+}

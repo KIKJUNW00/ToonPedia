@@ -49,8 +49,7 @@ public class commentController {
 		}
 		log.info("Received Comment: " + dto);
 		
-		commentService.commentSave(dto, user.getUsername());
-		return ResponseEntity.ok("댓글 작성완료");
+		return ResponseEntity.ok(commentService.commentSave(dto, user.getUsername()));
 	}
 	
 	

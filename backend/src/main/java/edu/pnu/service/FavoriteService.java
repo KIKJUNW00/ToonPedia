@@ -21,26 +21,34 @@ public class FavoriteService {
 	private final MemberRepository memberRepo;
 	
 	//관심웹툰 저장
-	public void favoriteWebtoons(Favorite favorite, String username) {
+	public FavoriteDTO favoriteWebtoons(FavoriteDTO dto, String username) {
 		Member member = memberRepo.findById(username).get();
 		
-		favorite.setMember(member);
+		Favorite f = new Favorite();
 		
-		favoriteRepo.save(favorite);
+		f.setCode(dto.getCode());
+		f.setPicture(dto.getPicture());
+		f.setName(dto.getName());
+		f.setMember(member);
+		
+		f = favoriteRepo.save(f);
+		
+		return new FavoriteDTO(f);
 	}
 	
 //	유저별 관심웹툰 찾아서 뿌리기
-	public List<FavoriteDTO> UserFavorite(Long id) {
-	
-	    List<Favorite> list = favoriteRepo.findAll();
-	     
-	    List<FavoriteDTO> ret = new ArrayList<>();
-	    
-	    for(Favorite c : list) {
-	    	ret.add(new FavoriteDTO(c));
-	    }
+	public List<FavoriteDTO> UserFavorite(String username) {
+		Member member = memberRepo.findById(username).get();
 		
-	    return ret;
+		List<Favorite> list = member.getFavorites();
+		
+		List<FavoriteDTO> ret = new ArrayList<>();
+		for(Favorite f : list) {
+			ret.add(new FavoriteDTO(f));
+		}
+		
+		return ret;
+		
 	}
 	
 //	관심웹툰 삭제

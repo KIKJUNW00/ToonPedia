@@ -1,7 +1,5 @@
 package edu.pnu.domain.dto;
 
-import java.util.Date;
-
 import edu.pnu.domain.Favorite;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,22 +7,20 @@ import lombok.ToString;
 
 @Getter @Setter @ToString
 public class FavoriteDTO {
-	private Long id;
 	
-	private String nickName;
+//	private String userId;
 	
-	private String userId;
-	
-	private String name; // 웹툰 이름
 	private String code; // 웹툰 코드
+	private String name; // 웹툰 이름
 	private String picture; // 웹툰 타이틀 표지
 	
+	// 기본 생성자 추가
+    public FavoriteDTO() {}
+	
 	public FavoriteDTO(Favorite favorite) {
-		this.id = favorite.getId();
-		this.nickName = favorite.getMember().getNickName();
-		this.userId = favorite.getMember().getUserId();
-		this.name = favorite.getName();
+//		this.userId = favorite.getMember().getUserId();
 		this.code = favorite.getCode();
+		this.name = favorite.getName();
 		this.picture = favorite.getPicture();
 	}
 }

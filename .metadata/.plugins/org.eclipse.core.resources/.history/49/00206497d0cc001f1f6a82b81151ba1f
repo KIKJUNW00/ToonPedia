@@ -1,0 +1,105 @@
+package edu.pnu.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.intercept.AuthorizationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import edu.pnu.OAuth2SuccessHandler;
+import edu.pnu.filter.JWTAuthenticationFilter;
+import edu.pnu.filter.JWTAuthorizationFilter;
+import edu.pnu.persistence.MemberRepository;
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig  {
+	
+	private final OAuth2SuccessHandler successHandler;
+	
+	private final AuthenticationConfiguration authenticationConfiguration;
+
+	private final MemberRepository memberRepository;
+	
+	@Bean
+	SecurityFilterChain securityfilterChain(HttpSecurity http) throws Exception {
+
+		// CSRF 보호 비활성화(사이트간 요청 위조)
+		http.csrf(cf -> cf.disable());
+		http.cors(co -> co.configurationSource(corsSource()));
+		
+		//Form을 이용한 로그인을 사용하지 않겠다는 설정
+		http.formLogin(frmLogin -> frmLogin.disable());
+		
+		// 구글 로그인을 실행하면 DefaultOAuth2UserService가 실행됨.
+				// 로그인에 성공했을 때 추가적인 작업이 필요하면 DefaultOAuth2UserService를 상속한 클래스의
+				// loadUser 메소드에서 하면 됨.
+//		http.oauth2Login(oauth2 -> oauth2
+//				.loginPage("/login")
+//				.defaultSuccessUrl("/loginSuccess", true));
+				
+
+		http.logout(logout -> 
+			logout.invalidateHttpSession(true) // 현재 브라우저와 연결된 세션 강제 종료
+					.deleteCookies("JSESSIONID") // 세션 아이디가 저장된 쿠키 삭제
+					.logoutSuccessUrl("/login")); // 로그아웃 후 이동할 URL 지정
+
+		// 권한 없이 접근 가능한 URL 설정
+				http.authorizeHttpRequests(auth -> auth
+					.requestMatchers("/h2-console/**").permitAll() // H2-console 접근 허용
+					.requestMatchers("/", "/board/**","/join").permitAll() // 인증 없이 접근 가능
+					.anyRequest().authenticated() // 그 외 모든 요청은 인증 필요
+//					.anyRequest().permitAll()
+				);
+		
+				
+//		브라우저가 다른 사이트에서 현재 사이트를 iframe으로 로드하지 못하도록 방지하는 HTTP 헤더
+		http.headers(hr -> hr.frameOptions(fo -> fo.disable()));
+		
+		/*JWT 토큰사용을 위한 설정*/
+		
+//		Http Basic인증 방식을 사용하지 않겠다는 설정
+		http.httpBasic(basic -> basic.disable());
+		
+		//세션을 유지하지 않겠다고 설정
+		//URL 호출 뒤 응답할 때 까지는 유지되지만 응답 후 삭제된다는 의미
+		http.sessionManagement(sm -> sm
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+		
+		
+		http.addFilter(new JWTAuthenticationFilter(authenticationConfiguration.getAuthenticationManager()));
+		
+		//스프링 시큐리티가 등록한 필터들 중에서 AuthorizationFilte 앞에 앞에서 작성한 필터를 삽입한다.
+		http.addFilterBefore(new JWTAuthorizationFilter(memberRepository), AuthorizationFilter.class);
+		
+		//로그인에 성공하면 임의의 사용자를 생성해서 DB에 저장하고 JWT토큰을 만들어서 응답 헤더에 설정하는 핸들러
+//		http.oauth2Login(oauth2->oauth2.successHandler(successHandler));
+		
+
+		
+		return http.build();
+
+	}
+	
+	private CorsConfigurationSource corsSource() {
+    	CorsConfiguration config = new CorsConfiguration();
+    	config.addAllowedOriginPattern(CorsConfiguration.ALL);
+    	config.addAllowedMethod(CorsConfiguration.ALL);
+    	config.addAllowedHeader(CorsConfiguration.ALL);
+    	config.addExposedHeader("Authorization");
+    	config.setAllowCredentials(true);	// 쿠키 전송 허용 
+
+    	UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    	source.registerCorsConfiguration("/**", config);
+    	return source;
+    }
+	
+}

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.pnu.domain.Member;
+import edu.pnu.domain.dto.FavoriteDTO;
 import edu.pnu.domain.Favorite;
 import edu.pnu.service.FavoriteService;
 import edu.pnu.service.MemberService;
@@ -50,20 +51,19 @@ public class MemberController {
 	
 //	관심웹툰 등록하기
 	@PostMapping("/favorite")
-	public ResponseEntity<?> favoriteWebtoons(@RequestBody Favorite favorites, @AuthenticationPrincipal User user){
+	public ResponseEntity<?> favoriteWebtoons(@RequestBody FavoriteDTO dto, @AuthenticationPrincipal User user){
 		
 		
-		favoriteService.favoriteWebtoons(favorites, user.getUsername());
-		return ResponseEntity.ok("관심웹툰 등록완료");
+		return ResponseEntity.ok(favoriteService.favoriteWebtoons(dto, user.getUsername()));
 	}
 	
-//	내일 해야할것
-//	@GetMapping("/board/{id}")
-//	public ResponseEntity<?> getBoardId(@PathVariable Long id){
-//		log.info("id맞는 게시글 가져오기");
-//		return ResponseEntity.ok(commuService.getBoard(id));
-//	}
-//	
+	//유저별 관심웹툰가져오기
+	@GetMapping("favorites")
+	public ResponseEntity<?> getBoardId(@AuthenticationPrincipal User user){
+		log.info("userid맞는 관심웹툰 가져오기");
+		return ResponseEntity.ok(favoriteService.UserFavorite(user.getUsername()));
+	}
+	
 }
 
 

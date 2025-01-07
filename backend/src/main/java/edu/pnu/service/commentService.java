@@ -23,7 +23,7 @@ public class commentService {
 	private final CommunityRepository commuRepo;
 	
 	//댓글쓰기
-	public void commentSave(CommentDTO dto, String username) {
+	public CommentDTO commentSave(CommentDTO dto, String username) {
 		
 		Member member = memberRepo.findById(username).get();
 		Community commnity = commuRepo.findById(dto.getCommunity_id()).get();
@@ -34,7 +34,10 @@ public class commentService {
 		comment.setCommunity(commnity);
 		comment.setContent(dto.getContent());
 		
-		commentRepo.save(comment);
+		comment = commentRepo.save(comment);
+		
+		return new CommentDTO(comment);
+		
 	}
 	
 	//댓글 모두 가져오기
@@ -50,7 +53,7 @@ public class commentService {
 //		return ret;
 //	}
 	
-//	id별 댓글 가져오기
+//	게시글(id)별 댓글 가져오기
 	public List<CommentDTO> getCommentId(Long id) {
 		Community community = commuRepo.findById(id).get();
 		

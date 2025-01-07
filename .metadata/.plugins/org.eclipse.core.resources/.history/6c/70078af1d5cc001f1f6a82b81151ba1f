@@ -1,0 +1,81 @@
+package edu.pnu.controller;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import edu.pnu.domain.Member;
+import edu.pnu.domain.dto.FavoriteDTO;
+import edu.pnu.domain.Favorite;
+import edu.pnu.service.FavoriteService;
+import edu.pnu.service.MemberService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@RequiredArgsConstructor
+@RestController
+public class MemberController {
+
+	private final FavoriteService favoriteService;
+	private final MemberService memService;
+
+	// 회원가입
+//	@GetMapping("/join")
+//	public String showJoinPage() {
+//	    return "join";  // 회원가입 페이지를 보여줌 (join.html 등)
+//	}
+
+	// 회원가입 처리
+    @PostMapping("/join")
+    public ResponseEntity<?> joinProc(@RequestBody Member member) {
+        try {
+            memService.memSave(member);
+            return ResponseEntity.ok("회원가입 성공");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("회원가입 실패: " + e.getMessage());
+        }
+    }
+	
+	// 멤버 목록 가져오기
+	@GetMapping("/members")
+	public ResponseEntity<?> getMember() {
+		return ResponseEntity.ok(memService.getMembers());
+	}
+	
+//	관심웹툰 등록하기
+	@PostMapping("/favorite")
+	public ResponseEntity<?> favoriteWebtoons(@RequestBody FavoriteDTO dto, @AuthenticationPrincipal User user){
+		
+		
+		favoriteService.favoriteWebtoons(dto, user.getUsername());
+		return ResponseEntity.ok("관심웹툰 등록완료");
+	}
+	
+	@GetMapping("favorite/{userid}")
+	public ResponseEntity<?> getBoardId(@AuthenticationPrincipal User user){
+		log.info("userid맞는 게시글 가져오기");
+		return ResponseEntity.ok(favoriteService.UserFavorite(user.getUsername()));
+	}
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
