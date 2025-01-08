@@ -6,32 +6,39 @@ export const LikedWebtoonContext = createContext();
 export default function LikedWebtoonProvider({ children }) {
 
   const [likedWebtoons, setLikedWebtoons] = useState([]);
-  console.log('Favorite.copy in')
+
   useEffect(() => {
+    console.log('Favorite in')
     const fetchLikedWebtoons = async () => {
       const token = localStorage.getItem('authToken');
       if (!token) return;
 
       try {
-        const response = await axios.get('http://10.125.121.117:8080/favorite', {
+        console.log('Favorite in2')
+        const response = await axios.get(`http://10.125.121.117:8080/favorites`, {
           headers: { 
-                    Authorization: `${token}` 
+                      Authorization: `${token}` 
                    },
         });
+
+        const uniqueWebtoons = response.data.filter((value, index, self) => {
+          return index === self.findIndex((t) => (t.id === value.id));
+        });
+        setLikedWebtoons(uniqueWebtoons);
+
+        console.log('Fetched liked webtoons:', response.data);
         setLikedWebtoons(response.data);
       } catch (error) {
         console.error('Failed to fetch liked webtoons:', error);
       }
     };
-
+    
     fetchLikedWebtoons();
   }, []);
 
   const addWebtoon = async (webtoon) => {
     const token = localStorage.getItem('authToken');
     if (!token) return;
-
-    const userId = token
 
     const webtoondata = {
       code : webtoon.id,
@@ -40,41 +47,17 @@ export default function LikedWebtoonProvider({ children }) {
     };
 
     try {
-      await axios.post('http://10.125.121.117:8080/favorite', JSON.stringify(webtoondata), {
+      await axios.post('http://10.125.121.117:8080/favorite', webtoondata, {
         headers: { 
                     Authorization: `${token}`,
                     'Content-Type': 'application/json'
                  },
-        
       });
-      setLikedWebtoons((prev) => {
-        if (!prev.some((liked) => liked.id === webtoon.id)) {
-          return [...prev, webtoon];
-        }
-        return prev;
-    });
-
-    const saveWebtoons = JSON.parse(localStorage.getItem(`${userId}_likedWebtoons`)) || [];
-      if (!saveWebtoons.some((liked) => liked.id === webtoon.id)) {
-        saveWebtoons.push(webtoon);
-        localStorage.setItem(`${userId}_likedwebtoons`, JSON.stringify(saveWebtoons));
-      }
+      setLikedWebtoons((prev) => [...prev, webtoon]);
     } catch (error) {
       console.error('Failed to add webtoon:', error);
     }
   };
-
-  // const getLikedWebtoons = () => {
-  //   const token = localStorage.getItem('authToken');
-  //   if (!token) return [];
-  
-  //   // 사용자 고유의 아이디를 토큰에서 추출
-  //   const userId = token; // 또는 `jwt` 토큰에서 `userId`를 추출하는 방식 사용
-  
-  //   // 로컬 스토리지에서 해당 사용자의 웹툰 목록을 가져옵니다
-  //   const savedWebtoons = JSON.parse(localStorage.getItem(`${userId}_likedWebtoons`)) || [];
-  //   return savedWebtoons;
-  // };
 
   const removeWebtoon = async (id) => {
     const token = localStorage.getItem('authToken');

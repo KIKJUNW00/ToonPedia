@@ -1,11 +1,16 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { LikedWebtoonContext } from '../메인_웹툰화면/Favorite';
 import Title from '../웹툰화면_컴포넌트/Title';
 
 export default function MyPage() {
+  
+  const { likedWebtoons, fetchLikedWebtoons } = useContext(LikedWebtoonContext);
+  
+  useEffect(() => {
+    console.log('My Page in')
+    fetchLikedWebtoons();
+  }, [fetchLikedWebtoons]);
 
-  const { likedWebtoons } = useContext(LikedWebtoonContext);
-  console.log('My Page in')
   return (
     <div>
       <Title />
