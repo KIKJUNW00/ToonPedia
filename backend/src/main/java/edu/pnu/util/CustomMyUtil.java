@@ -11,7 +11,6 @@ public class CustomMyUtil {
 		String regName = null;
 		//userString 조사
 		if(userString.contains("google"))		   	 regName = "Google";
-		else if (userString.contains("facebook")) 	 regName="Facebook";
 		else if (userString.contains("naver"))		 regName = "Naver";
 		else if (userString.contains("kakao"))		 regName = "KaKao";
 		else {

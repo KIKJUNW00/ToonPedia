@@ -38,6 +38,8 @@ public class FavoriteService {
 	
 //	유저별 관심웹툰 찾아서 뿌리기
 	public List<FavoriteDTO> UserFavorite(String username) {
+		System.out.println("@@@@@@@@@@@@@@@@@@"+username);
+		
 		Member member = memberRepo.findById(username).get();
 		
 		List<Favorite> list = member.getFavorites();

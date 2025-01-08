@@ -39,8 +39,8 @@ public class Member {
 	@OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Favorite> favorites = new ArrayList<>(); // 양방향 관계 설정
 	
-	@Column(unique = true, nullable = true)
-    private String snsId;
+//	@Column(unique = true, nullable = true)
+//    private String snsId;
 
 
     @Enumerated(EnumType.STRING)

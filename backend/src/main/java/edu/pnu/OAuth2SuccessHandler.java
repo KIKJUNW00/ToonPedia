@@ -1,6 +1,7 @@
 package edu.pnu;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.Authentication;
@@ -9,12 +10,14 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
+import edu.pnu.config.passwordEncoderConfig;
 import edu.pnu.domain.Member;
 import edu.pnu.domain.Role;
 import edu.pnu.persistence.MemberRepository;
 import edu.pnu.util.CustomMyUtil;
 import edu.pnu.util.JWTUtil;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +28,6 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 	private final MemberRepository memRepo;
-	private final PasswordEncoder encoder;
 	
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -39,12 +41,12 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 		String nickName = (String) user.getAttributes().get("name"); // 구글 사용자 이름 (닉네임)
 		
 		if (snsid == null) {
-			log.error("onAuthenticationSuccess:Cannot generate username from oauth2user!");
-			throw new ServletException("Cannot generate username from oauth2user!");
+			log.error("@@onAuthenticationSuccess:Cannot generate username from oauth2user!");
+			throw new ServletException("@@Cannot generate username from oauth2user!");
 		}
-		log.info("onAUthenticationSuccess:" + snsid);
+		log.info("@@onAuthenticationSuccess:" + snsid);
 		memRepo.save(Member.builder()
-				.snsId(snsid)
+				.userId(snsid)
 				.nickName(nickName) // 구글에서 가져온 닉네임 저장
 				.role(Role.ROLE_USER)
 				.build());
@@ -52,10 +54,18 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 		
 		// JWT 토큰 생성
 		String jwtToken = JWTUtil.getJWT(snsid);
-		// JWT 토큰을 응답 헤더에 추가
-		response.addHeader(HttpHeaders.AUTHORIZATION, jwtToken);
+		
+		Cookie jwtCookie = new Cookie("jwtToken", URLEncoder.encode(jwtToken, "utf-8"));
+		jwtCookie.setHttpOnly(true);		// XSS 공격 방지
+		jwtCookie.setPath("/");				// 모든 경로에서 쿠키 사용 가능
+		jwtCookie.setSecure(false);			// HTTPS가 아닌 환경에서 테스트 중이라면 false로 설정
+		jwtCookie.setDomain("localhost");	// 쿠키를 localhost 도메인에서 사용할 수 있도록 설정
+		jwtCookie.setMaxAge(24 * 60 * 60);			// 쿠키 유효 시간 설정(10초)
+		response.addCookie(jwtCookie);
+	
 		
 		// 로그인 후 이동할 URL 설정 (예: 홈 페이지로 리디렉션)
-	    super.onAuthenticationSuccess(request, response, authentication);
+		System.out.println("OnAuthenticationSuccess");
+	    response.sendRedirect("http://localhost:3000/oauth2/callback");
 	}
 }

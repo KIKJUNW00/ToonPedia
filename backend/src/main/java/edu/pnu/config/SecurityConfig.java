@@ -44,7 +44,7 @@ public class SecurityConfig  {
 				// loadUser 메소드에서 하면 됨.
 //		http.oauth2Login(oauth2 -> oauth2
 //				.loginPage("/login")
-//				.defaultSuccessUrl("/loginSuccess", true));
+//				.defaultSuccessUrl("/", true));
 				
 
 		http.logout(logout -> 
@@ -55,7 +55,7 @@ public class SecurityConfig  {
 		// 권한 없이 접근 가능한 URL 설정
 				http.authorizeHttpRequests(auth -> auth
 //					.requestMatchers("/h2-console/**").permitAll() // H2-console 접근 허용
-					.requestMatchers("/", "/board/**","/join").permitAll() // 인증 없이 접근 가능
+					.requestMatchers("/jwtcallback","/", "/board/**","/join").permitAll() // 인증 없이 접근 가능
 					.anyRequest().authenticated() // 그 외 모든 요청은 인증 필요
 //					.anyRequest().permitAll()
 				);
@@ -81,7 +81,7 @@ public class SecurityConfig  {
 		http.addFilterBefore(new JWTAuthorizationFilter(memberRepository), AuthorizationFilter.class);
 		
 		//로그인에 성공하면 임의의 사용자를 생성해서 DB에 저장하고 JWT토큰을 만들어서 응답 헤더에 설정하는 핸들러
-//		http.oauth2Login(oauth2->oauth2.successHandler(successHandler));
+		http.oauth2Login(oauth2->oauth2.successHandler(successHandler));
 		
 
 		

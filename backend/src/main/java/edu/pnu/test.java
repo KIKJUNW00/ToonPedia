@@ -28,7 +28,7 @@ public class test implements ApplicationRunner{
                 .userId("member01")
                 .password(encoder.encode("123456a"))
                 .nickName("홍길동1")
-                .snsId(null)
+//                .snsId(null)
                 .role(Role.ROLE_USER)
                 .build();
         

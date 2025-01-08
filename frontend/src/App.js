@@ -15,6 +15,7 @@ import DayKakao from './KakaoDay/DayKakao';
 import DayKakaoPage from './KakaoPageDay/DayKakaoPage';
 import { AuthProvider } from './웹툰화면_컴포넌트/AuthProvider';
 import Favorite from './메인_웹툰화면/Favorite';
+import OAuth2Callback from './로그인_회원가입/OAuth2Callback';
 
 export default function App() {
   return (
@@ -29,6 +30,7 @@ export default function App() {
               {/* 로그인 및 회원가입 */}
               <Route path='/Login' element={<Login />} />
               <Route path='/Membership' element={<MemberShip />} />
+              <Route path='/oauth2/callback' element={<OAuth2Callback />} />
 
               {/* 게시판 관련 */}
               <Route path='/Board' element={<BoardMain />} />

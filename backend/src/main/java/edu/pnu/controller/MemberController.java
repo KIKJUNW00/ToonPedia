@@ -26,11 +26,6 @@ public class MemberController {
 	private final FavoriteService favoriteService;
 	private final MemberService memService;
 
-	// 회원가입
-//	@GetMapping("/join")
-//	public String showJoinPage() {
-//	    return "join";  // 회원가입 페이지를 보여줌 (join.html 등)
-//	}
 
 	// 회원가입 처리
     @PostMapping("/join")

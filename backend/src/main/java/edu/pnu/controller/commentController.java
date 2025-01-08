@@ -24,12 +24,6 @@ public class commentController {
 	private final commentService commentService;
 	
 	
-//	@GetMapping("/comment")
-//	public ResponseEntity<?> getComments(){
-//		log.info("모든 댓글 가져오기");
-//		return ResponseEntity.ok(commentService.getComments());
-//	}
-	
 	//커뮤니티 id별 댓글 가져오기
 	@GetMapping("/comment/{id}")
 	public ResponseEntity<?> getCommentId(@PathVariable Long id){

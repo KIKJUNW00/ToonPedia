@@ -62,37 +62,32 @@ export default function Login() {
     }
   };
 
-  const handlesubmiAuth = async (e, provider) => {
-    e.preventDefault();
-
-    let authUrl = '';
-    switch (provider) {
-      case 'kakao':
-        authUrl = 'http://10.125.121.117:8080/oauth2/code/kakao';
-        break;
-      case 'naver':
-        authUrl = 'http://10.125.121.117:8080/oauth2/code/naver';
-        break;
-      case 'google':
-        authUrl = 'http://10.125.121.117:8080/oauth2/code/google';
-        break;
-      default:
-        console.error('Unsupported provider');
-        return;
-    }
-
+  const handleGoogleLogin = async () => {
     try {
-      window.location.href = authUrl;
+      window.location.href = `http://localhost:8080/oauth2/authorization/google`;
     } catch (error) {
-      if (error.response) {
-        console.error('Response Error:', error.response.data);
-        setErrorMessage('로그인 정보가 일치하지 않습니다');
-      } else {
-        console.error('Network Error:', error.message);
-        setErrorMessage('서버와의 연결에 문제가 발생했습니다.');
-      }
+      console.error('Google OAuth2 login failed:', error);
     }
-  }
+  };
+  
+  
+  const handleNaverLogin = async () => {
+    try {
+      window.location.href = `http://localhost:8080/oauth2/authorization/naver`;
+    } catch (error) {
+      console.error('Google OAuth2 login failed:', error);
+    }
+  };
+  
+  const handlekakaoLogin = async () => {
+    try {
+      window.location.href = `http://localhost:8080/oauth2/authorization/kakao`;
+    } catch (error) {
+      console.error('Google OAuth2 login failed:', error);
+    }
+  };
+
+  
 
   const enterkeydown = (e) => {
     if (e.keyCode === 13) {
@@ -134,17 +129,17 @@ export default function Login() {
               <span className='mt-5 text-white'>또는</span>
               <div className='flex flex-col items-center w-full'>
                 <button className='flex mt-5 rounded-md text-xl items-center bg-[#fee500] w-3/4 h-[50px] font-bold'
-                        onClick={(e) => handlesubmiAuth(e, 'kakao')}>
+                        onClick={handlekakaoLogin}>
                   <img className='ml-5' src={kakao} alt='kakao' />
                   <span className='ml-14'>카카오 로그인</span>
                 </button>
                 <button className='flex mt-5 rounded-md text-xl items-center bg-[#03c75a] w-3/4 h-[50px] font-bold'
-                        onClick={(e) => handlesubmiAuth(e, 'naver')}>
+                        onClick={handleNaverLogin}>
                   <img className='ml-5' src={naver} alt='kakao' />
                   <span className='ml-14'>네이버 로그인</span>
                 </button>
                 <button className='flex mt-5 rounded-md text-xl items-center bg-[#4d78be] w-3/4 h-[50px] font-bold'
-                        onClick={(e) => handlesubmiAuth(e, 'google')}>
+                        onClick={handleGoogleLogin}>
                   <img className='ml-5' src={google} alt='kakao' />
                   <span className='ml-16'>구글 로그인</span>
                 </button>
