@@ -5,7 +5,7 @@ import Title from '../웹툰화면_컴포넌트/Title';
 export default function MyPage() {
 
   const { likedWebtoons } = useContext(LikedWebtoonContext);
-  console.log('My Page in')
+
   return (
     <div>
       <Title />
@@ -32,6 +32,7 @@ export default function MyPage() {
                 {webtoon.name ? webtoon.name.length > 15 ? webtoon.name.slice(0, 15) + '...' : webtoon.name : ""}
               </span>
             </a>
+            
           ))
         ) : (
           <p>좋아요한 웹툰이 없습니다.</p>

@@ -28,25 +28,12 @@ export default function BoardWrite({ onClose }) {
         }
     
         try {
-            // await axios.post('http://10.125.121.117:8080/insertBoard', { title, content },
-            //     {
-            //         headers: {
-            //             'Authorization': `Bearer ${token}`, // Bearer 토큰 방식으로 인증
-            //             'Content-Type': 'application/json'  
-            //           }
-            //     }
-            // )
-
-            await axios.post('http://10.125.121.117:8080/insertBoard', 
+            await axios.post('http://10.125.121.117:8080/insertBoard', { title, content },
                 {
                     headers: {
-                        'Authorization': `Bearer ${token}`, // Bearer 토큰 방식으로 인증
+                        'Authorization': `${token}`, // Bearer 토큰 방식으로 인증
                         'Content-Type': 'application/json'  
-                      },
-                    body: JSON.stringify({
-                        title,
-                        content
-                    })
+                      }
                 }
             )
             alert('게시글이 등록되었습니다.');

@@ -1,11 +1,15 @@
 export default function CommentTime({date}) {
 
+	if (!date || !(date instanceof Date)) {
+		return "날짜 없음"; // 기본값 처리
+	  }
+
 	const seconds = 1;
 	const minute = seconds * 60;
 	const hour = minute * 60;
 	const day = hour * 24;
 	
-	let today = new Date();
+	let today = new Date()
 	let Time = Math.trunc((today.getTime() - date.getTime()) / 1000);
 	
 	let CommentTime = "";
@@ -20,7 +24,8 @@ export default function CommentTime({date}) {
 	} else if (Time < (day * 7)) {
 		CommentTime = Math.trunc(Time / day) + "일 전";
 	} else {
-		CommentTime = Math.trunc(date, "yyyy.MM.dd");
+		const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    	CommentTime = date.toLocaleDateString('ko-KR', options);
 	}
 	
 	return CommentTime;
