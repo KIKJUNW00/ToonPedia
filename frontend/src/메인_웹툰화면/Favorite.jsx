@@ -3,17 +3,15 @@ import axios from 'axios';
 
 export const LikedWebtoonContext = createContext();
 
-export default function LikedWebtoonProvider({ children }) {
+export default function Favorite({ children }) {
   const [likedWebtoons, setLikedWebtoons] = useState([]);
 
   const fetchLikedWebtoons = useCallback(async () => {
-    // console.log(likedWebtoons)
     const token = localStorage.getItem('authToken');
     if (!token) return;
 
     try {
-      console.log("LikedWebtoonProvider token:",token)
-      const response = await axios.get('http://localhost:8080/favorites', {
+      const response = await axios.get('http://10.125.121.117:8080/favorites', {
         headers: {
           Authorization: `${token}`,
         },
@@ -40,34 +38,39 @@ export default function LikedWebtoonProvider({ children }) {
     };
 
     try {
-      await axios.post('http://localhost:8080/favorite', webtoondata, {
+      await axios.post('http://10.125.121.117:8080/favorite', webtoondata, {
         headers: {
           Authorization: `${token}`,
           'Content-Type': 'application/json',
         },
       });
-      setLikedWebtoons((prev) => [...prev, webtoon]);
+      setLikedWebtoons((prev) => {
+        if (!prev.some((liked) => liked.id === webtoon.id)) {
+          return [...prev, webtoon];
+        }
+        return prev;
+      });
     } catch (error) {
       console.error('Failed to add webtoon:', error);
     }
   };
 
-  const removeWebtoon = async (id) => {
-    const token = localStorage.getItem('authToken');
-    if (!token) return;
+  // const removeWebtoon = async (id) => {
+  //   const token = localStorage.getItem('authToken');
+  //   if (!token) return;
 
-    try {
-      await axios.delete(`http://localhost:8080/favorite`, {
-        headers: { Authorization: `${token}` },
-      });
-      setLikedWebtoons((prev) => prev.filter((webtoon) => webtoon.id !== id));
-    } catch (error) {
-      console.error('Failed to remove webtoon:', error);
-    }
-  };
+  //   try {
+  //     await axios.delete(`http://10.125.121.117:8080/favorite`, {
+  //       headers: { Authorization: `${token}` },
+  //     });
+  //     setLikedWebtoons((prev) => prev.filter((webtoon) => webtoon.id !== id));
+  //   } catch (error) {
+  //     console.error('Failed to remove webtoon:', error);
+  //   }
+  // };
 
   return (
-    <LikedWebtoonContext.Provider value={{ likedWebtoons, fetchLikedWebtoons, addWebtoon, removeWebtoon }}>
+    <LikedWebtoonContext.Provider value={{ likedWebtoons, fetchLikedWebtoons, addWebtoon }}>
       {children}
     </LikedWebtoonContext.Provider>
   );

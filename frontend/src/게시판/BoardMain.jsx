@@ -41,10 +41,10 @@ export default function Board() {
 
   useEffect(() => {
     fetchBoardData();
-}, []);
+}, [boardData]);
 
 
-  const itemsPerPage = 39;
+  const itemsPerPage = 15;
   const totalPages = Math.ceil(boardData.length / itemsPerPage);
 
   const currentData = boardData.slice(

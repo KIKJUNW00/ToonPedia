@@ -1,57 +1,50 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useCallback } from 'react';
 import axios from 'axios';
 
 export const LikedWebtoonContext = createContext();
 
 export default function LikedWebtoonProvider({ children }) {
-
   const [likedWebtoons, setLikedWebtoons] = useState([]);
 
-  useEffect(() => {
-    console.log('Favorite in')
-    const fetchLikedWebtoons = async () => {
-      const token = localStorage.getItem('authToken');
-      if (!token) return;
+  const fetchLikedWebtoons = useCallback(async () => {
+    // console.log(likedWebtoons)
+    const token = localStorage.getItem('authToken');
+    if (!token) return;
 
-      try {
-        console.log('Favorite in2')
-        const response = await axios.get(`http://10.125.121.117:8080/favorites`, {
-          headers: { 
-                      Authorization: `${token}` 
-                   },
-        });
-
-        const uniqueWebtoons = response.data.filter((value, index, self) => {
-          return index === self.findIndex((t) => (t.id === value.id));
-        });
-        setLikedWebtoons(uniqueWebtoons);
-
-        console.log('Fetched liked webtoons:', response.data);
-        setLikedWebtoons(response.data);
-      } catch (error) {
-        console.error('Failed to fetch liked webtoons:', error);
-      }
-    };
-    
-    fetchLikedWebtoons();
-  }, []);
+    try {
+      console.log("LikedWebtoonProvider token:",token)
+      const response = await axios.get('http://localhost:8080/favorites', {
+        headers: {
+          Authorization: `${token}`,
+        },
+      });
+      console.log('Fetching liked webtoons', response.data);
+      // const uniqueWebtoons = response.data.filter((value, index, self) =>
+      //   self.findIndex((t) => t.id === value.id) === index
+      // );
+      // console.log('uniqueWebtoons', uniqueWebtoons);
+      setLikedWebtoons(response.data);
+    } catch (error) {
+      console.error('Failed to fetch liked webtoons:', error);
+    }
+  }, []); // 빈 배열을 의존성으로 사용하여 참조 고정
 
   const addWebtoon = async (webtoon) => {
     const token = localStorage.getItem('authToken');
     if (!token) return;
 
     const webtoondata = {
-      code : webtoon.id,
-      name : webtoon.title,
-      picture : webtoon.thumbnail[0],
+      code: webtoon.id,
+      name: webtoon.title,
+      picture: webtoon.thumbnail[0],
     };
 
     try {
-      await axios.post('http://10.125.121.117:8080/favorite', webtoondata, {
-        headers: { 
-                    Authorization: `${token}`,
-                    'Content-Type': 'application/json'
-                 },
+      await axios.post('http://localhost:8080/favorite', webtoondata, {
+        headers: {
+          Authorization: `${token}`,
+          'Content-Type': 'application/json',
+        },
       });
       setLikedWebtoons((prev) => [...prev, webtoon]);
     } catch (error) {
@@ -64,7 +57,7 @@ export default function LikedWebtoonProvider({ children }) {
     if (!token) return;
 
     try {
-      await axios.delete(`http://10.125.121.117:8080/favorite`, {
+      await axios.delete(`http://localhost:8080/favorite`, {
         headers: { Authorization: `${token}` },
       });
       setLikedWebtoons((prev) => prev.filter((webtoon) => webtoon.id !== id));
@@ -74,7 +67,7 @@ export default function LikedWebtoonProvider({ children }) {
   };
 
   return (
-    <LikedWebtoonContext.Provider value={{ likedWebtoons, addWebtoon, removeWebtoon }}>
+    <LikedWebtoonContext.Provider value={{ likedWebtoons, fetchLikedWebtoons, addWebtoon, removeWebtoon }}>
       {children}
     </LikedWebtoonContext.Provider>
   );

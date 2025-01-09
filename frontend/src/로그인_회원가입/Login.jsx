@@ -140,7 +140,7 @@ export default function Login() {
                 </button>
                 <button className='flex mt-5 rounded-md text-xl items-center bg-[#4d78be] w-3/4 h-[50px] font-bold'
                         onClick={handleGoogleLogin}>
-                  <img className='ml-5' src={google} alt='kakao' />
+                  <img className='ml-5' src={google} alt='google' />
                   <span className='ml-16'>구글 로그인</span>
                 </button>
               </div>
