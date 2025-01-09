@@ -13,8 +13,9 @@ export default function Title() {
         if (localStorage.getItem('authToken')) {
             setIsLoggedIn(true);
         } else {
+            console.log("title useeffect false")
             setIsLoggedIn(false);
-            navigate('/');
+            // navigate('/');
         }
     },[isLoggedIn]);
 

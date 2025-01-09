@@ -2,7 +2,9 @@ package edu.pnu;
 
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.List;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,6 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 	private final MemberRepository memRepo;
+	private final PasswordEncoder encoder;
 	
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -37,23 +40,25 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 		OAuth2User user = (OAuth2User)authentication.getPrincipal(); 
 		
 		//임의의 사용자를 만들어서 서버에 저장
-		String snsid = CustomMyUtil.getUsernameFromOAuth2User(user);
+		String username = CustomMyUtil.getUsernameFromOAuth2User(user);
 		String nickName = (String) user.getAttributes().get("name"); // 구글 사용자 이름 (닉네임)
 		
-		if (snsid == null) {
+		if (username == null) {
 			log.error("@@onAuthenticationSuccess:Cannot generate username from oauth2user!");
 			throw new ServletException("@@Cannot generate username from oauth2user!");
 		}
-		log.info("@@onAuthenticationSuccess:" + snsid);
-		memRepo.save(Member.builder()
-				.userId(snsid)
-				.nickName(nickName) // 구글에서 가져온 닉네임 저장
-				.role(Role.ROLE_USER)
-				.build());
-		
+		log.info("@@onAuthenticationSuccess:" + username);
+		if(memRepo.findById(username).orElse(null) == null) {
+			memRepo.save(Member.builder()
+					.userId(username)
+					.password(encoder.encode("1234"))
+					.nickName(nickName) // 구글에서 가져온 닉네임 저장
+					.role(Role.ROLE_USER)
+					.build());
+		}
 		
 		// JWT 토큰 생성
-		String jwtToken = JWTUtil.getJWT(snsid);
+		String jwtToken = JWTUtil.getJWT(username);
 		
 		Cookie jwtCookie = new Cookie("jwtToken", URLEncoder.encode(jwtToken, "utf-8"));
 		jwtCookie.setHttpOnly(true);		// XSS 공격 방지

@@ -15,6 +15,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 
 import edu.pnu.domain.Member;
 import edu.pnu.persistence.MemberRepository;
+import edu.pnu.util.JWTUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -40,7 +41,9 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter{
 		String jwtToken =  srcToken.replace("Bearer ", ""); //토큰에서 Bearer를 제거
 		
 		//토큰에서 username추출
-		String userId = JWT.require(Algorithm.HMAC256("edu.pnu.jwt")).build().verify(jwtToken).getClaim("userId").asString();
+//		String userId = JWT.require(Algorithm.HMAC256("edu.pnu.jwt")).build().verify(jwtToken).getClaim("userId").asString();
+		String userId = JWTUtil.getClaim(jwtToken);
+		
 		
 		Optional<Member> opt = Optional.empty();
 		

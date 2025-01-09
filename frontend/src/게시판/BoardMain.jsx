@@ -27,11 +27,12 @@ export default function Board() {
     };
     const token = localStorage.getItem('authToken');
 
-  console.log(token)
+
+  console.log("token",token)
   const fetchBoardData = async () => {
     try {
-      const response = await axios.get('http://10.125.121.117:8080/board')
-
+      const response = await axios.get('http://localhost:8080/board')
+      console.log("reponse: ",response)
       setBoardData(response.data)
     } catch (error) {
       console.error('Error :', error);
@@ -58,7 +59,7 @@ export default function Board() {
           <section>
             <div>
               <table className="w-full text-sm">
-                <thead class="font-bold border-b">
+                <thead className="font-bold border-b">
                     <tr>
                       <th className='px-5 py-2 w-[100px]'>번호</th>
                       <th className='px-5 py-2 w-[540px]'>제목</th>

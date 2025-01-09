@@ -66,11 +66,11 @@ public class CommunityController {
 	}
 		
 	
-	public ResponseEntity<?> deleteBoard(Long id){
-		
-		commuService.deleteBoard(id);
-		
-		return ResponseEntity.ok("게시글 삭제완료");
-	}
+//	public ResponseEntity<?> deleteBoard(Long id){
+//		
+//		commuService.deleteBoard(id);
+//		
+//		return ResponseEntity.ok("게시글 삭제완료");
+//	}
 
 }

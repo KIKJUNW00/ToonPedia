@@ -27,7 +27,7 @@ public class SecurityController {
 	public ResponseEntity<?> jwtcallback(HttpServletRequest request) {
 		String jwtToken = null;
 		Cookie[] cookies = request.getCookies();
-		System.out.println("ssss@@@@@@@:" + cookies.toString());
+//		System.out.println("ssss@@@@@@@:" + cookies.toString());
 		for(Cookie cookie : cookies) {
 			if (cookie.getName().equals("jwtToken")) {
 				try {

@@ -29,7 +29,7 @@ export default function Login() {
     
     try {
       const response = await axios.post(
-        'http://10.125.121.117:8080/login', user, 
+        'http://localhost:8080/login', user, 
         {
           headers: { 
             'Content-Type': 'application/json', 
