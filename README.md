@@ -23,7 +23,7 @@
 | :------: |  :------: |
 | [<img src="https://avatars.githubusercontent.com/u/106502312?v=4" height=150 width=150> <br/> @KIKJUNW0](https://github.com/KIKJUNW00) |
 
-<div>
+</div>
 
 <br>
 
