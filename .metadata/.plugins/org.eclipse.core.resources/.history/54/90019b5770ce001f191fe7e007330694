@@ -4,7 +4,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -66,15 +65,12 @@ public class CommunityController {
 		return ResponseEntity.ok("게시글 업데이트완료");
 	}
 		
-	@DeleteMapping("/deleteBoard/{id}")
-	public ResponseEntity<?> deleteBoard(@PathVariable Long id){
+	
+	public ResponseEntity<?> deleteBoard(Long id){
 		
-		try {
-	        commuService.deleteBoard(id);
-	        return ResponseEntity.ok("게시글 삭제 완료");
-	    } catch (IllegalArgumentException e) {
-	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-	    }
+		commuService.deleteBoard(id);
+		
+		return ResponseEntity.ok("게시글 삭제완료");
 	}
 
 }

@@ -90,7 +90,7 @@ public class CommunityService {
 	
 //	게시글 삭제
 	public void deleteBoard(Long id) {
-		System.out.println("삭제");
+
 	    commuRepo.deleteById(id);
 	}
 

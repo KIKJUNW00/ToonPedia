@@ -49,7 +49,7 @@ export default function Day() {
   const fetchMy = async () => {
     if (token) {  // 로그인된 경우에만 좋아요 웹툰 가져오기
       try {
-        const response = await axios.get('http://10.125.121.117:8080/favorites', {
+        const response = await axios.get('http://localhost:8080/favorites', {
           headers: {
             Authorization: `${token}`,
           },

@@ -3,7 +3,6 @@ package edu.pnu;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpHeaders;
@@ -52,12 +51,12 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 		if(username.contains("Google")) {
 			nickName = (String) user.getAttributes().get("name"); // 구글 사용자 이름 (닉네임)
 		}
-		else if(username.contains("Naver")) {
-			Map<String, Object> response1 = user.getAttribute("response");
-			nickName = (String) response1.get("nickname"); // 'nickname' 필드 추출
-		} else if(username.contains("Kakao")) {
-			 Map<String, Object> properties = user.getAttribute("properties");
-		     nickName = (String) properties.get("nickname");
+		else if(oauthMail.contains("Naver")) {
+			Map<String,String> info = user.getAttribute("response");
+			name = info.get("name");
+		} else if(oauthMail.contains("Kakao")) {
+			Map<String,String> info = user.getAttribute("properties");
+			name = info.get("nickname");
 		}
 		
 		if(memRepo.findById(username).orElse(null) == null) {

@@ -3,7 +3,6 @@ package edu.pnu;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpHeaders;
@@ -42,24 +41,13 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 		
 		//임의의 사용자를 만들어서 서버에 저장
 		String username = CustomMyUtil.getUsernameFromOAuth2User(user);
-		String nickName = null;
+		String nickName = (String) user.getAttributes().get("name"); // 구글 사용자 이름 (닉네임)
 		
 		if (username == null) {
 			log.error("@@onAuthenticationSuccess:Cannot generate username from oauth2user!");
 			throw new ServletException("@@Cannot generate username from oauth2user!");
 		}
 		log.info("@@onAuthenticationSuccess:" + username);
-		if(username.contains("Google")) {
-			nickName = (String) user.getAttributes().get("name"); // 구글 사용자 이름 (닉네임)
-		}
-		else if(username.contains("Naver")) {
-			Map<String, Object> response1 = user.getAttribute("response");
-			nickName = (String) response1.get("nickname"); // 'nickname' 필드 추출
-		} else if(username.contains("Kakao")) {
-			 Map<String, Object> properties = user.getAttribute("properties");
-		     nickName = (String) properties.get("nickname");
-		}
-		
 		if(memRepo.findById(username).orElse(null) == null) {
 			memRepo.save(Member.builder()
 					.userId(username)

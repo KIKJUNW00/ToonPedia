@@ -69,12 +69,9 @@ public class CommunityController {
 	@DeleteMapping("/deleteBoard/{id}")
 	public ResponseEntity<?> deleteBoard(@PathVariable Long id){
 		
-		try {
-	        commuService.deleteBoard(id);
-	        return ResponseEntity.ok("게시글 삭제 완료");
-	    } catch (IllegalArgumentException e) {
-	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-	    }
+		commuService.deleteBoard(id);
+		
+		return ResponseEntity.ok("게시글 삭제완료");
 	}
 
 }

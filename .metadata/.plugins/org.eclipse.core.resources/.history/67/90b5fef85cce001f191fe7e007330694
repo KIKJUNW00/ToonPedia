@@ -57,7 +57,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 			nickName = (String) response1.get("nickname"); // 'nickname' 필드 추출
 		} else if(username.contains("Kakao")) {
 			 Map<String, Object> properties = user.getAttribute("properties");
-		     nickName = (String) properties.get("nickname");
+		        nickName = (String) properties.get("nickname");
 		}
 		
 		if(memRepo.findById(username).orElse(null) == null) {

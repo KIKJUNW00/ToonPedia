@@ -53,11 +53,11 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 			nickName = (String) user.getAttributes().get("name"); // 구글 사용자 이름 (닉네임)
 		}
 		else if(username.contains("Naver")) {
-			Map<String, Object> response1 = user.getAttribute("response");
-			nickName = (String) response1.get("nickname"); // 'nickname' 필드 추출
+			Map<String, Object> response = user.getAttribute("response");
+			 nickName = (String) response.get("nickname"); // 'nickname' 필드 추출
 		} else if(username.contains("Kakao")) {
-			 Map<String, Object> properties = user.getAttribute("properties");
-		     nickName = (String) properties.get("nickname");
+			Map<String,String> info = user.getAttribute("properties");
+			nickName = info.get("nickname");
 		}
 		
 		if(memRepo.findById(username).orElse(null) == null) {
