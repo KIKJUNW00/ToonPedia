@@ -61,6 +61,15 @@ export default function Day() {
     }
   };
 
+  const handleLike = (webtoon) => {
+    const isLiked = likedWebtoons.some((item) => item.code === webtoon.id.trim());
+    if (isLiked) {
+      setLikedWebtoons(likedWebtoons.filter((item) => item.code !== webtoon.id.trim()));
+    } else {
+      setLikedWebtoons([...likedWebtoons, { code: webtoon.id.trim(), ...webtoon }]);
+    }
+  };
+
   useEffect(() => {
     fetchMy(); // 로그인된 사용자의 좋아요 웹툰을 가져옴
     fetchAllWebtoons(); // 모든 무료 웹툰 데이터를 가져옴
@@ -82,7 +91,7 @@ export default function Day() {
               <ul>
                 {webtoonData[key].map((webtoon) => (
                   <li key={webtoon.id}>
-                    <EveryDayToonCard webtoons={[webtoon]} likedWebtoonsList={likedWebtoons} />
+                    <EveryDayToonCard webtoons={[webtoon]} likedWebtoonsList={likedWebtoons} handleLike={handleLike} />
                   </li>
                 ))}
               </ul>
