@@ -20,8 +20,7 @@
 | **김준우** | **류승진** |
 | :------: |  :------: |
 | **BE** | **FE** |
-| [<img src="/frontend/src/Image/KakaoTalk_20241017_113806726.jpg" height=150 width=150> <br/> @KIKJUNW0](https://github.com/KIKJUNW00) |
-| [<img src="/frontend/src/Image/pngtree-colorless-character-avatar-with-glasses-png-image_6317135.jpg" height=150 width=150> <br/> @lenoau](https://github.com/lenoau) |
+| [<img src="/frontend/src/Image/KakaoTalk_20241017_113806726.jpg" height=150 width=150> <br/> @KIKJUNW0](https://github.com/KIKJUNW00) | [<img src="/frontend/src/Image/pngtree-colorless-character-avatar-with-glasses-png-image_6317135.jpg" height=150 width=150> <br/> @lenoau](https://github.com/lenoau) |
 
 </div>
 
@@ -63,40 +62,72 @@
 ## 4. 페이지별 기능
 
 ### [메인화면]
-![mainPage](/frontend/src/Image/main.png)
 <br>
+![mainPage](/frontend/src/Image/main.png)
+
+- https://github.com/HyeokjaeLee/korea-webtoon-api?tab=readme-ov-file 에서 공유한 api를 통해서 웹툰정보들을 불러온다
+
 
 ### [로그인]
-![login](/frontend/src/Image/login.png)
 <br>
+![login](/frontend/src/Image/login.png)
+
+- 회원ID와 비밀번호를 JWT토큰을 통해 인증 및 인가하여 로그인
+- OAuth2로그인을 사용하여 sns로그인사용
+
 
 ### [회원가입]
-![join](/frontend/src/Image/join.png)
 <br>
+![join](/frontend/src/Image/join.png)
+
+- 로그인과 마찬가지로 sns회원가입 사용
+- 회원 비밀번호 유효성 검증
+- 회원 닉네임, ID, 비밀번호 DB 저장
 
 ### [요일별 웹툰]
-![dayWebtoon](/frontend/src/Image/dayWebtoon.png)
 <br>
+![dayWebtoon](/frontend/src/Image/dayWebtoon.png)
+
+- 월~일 요일별 웹툰 불러오기
 
 ### [게시판]
-![Board](/frontend/src/Image/Board.png)
 <br>
+![Board](/frontend/src/Image/Board.png)
+
+- DB에 저장된 게시글 불러오기
+- 게시글 작성시 **분전, **몇일전, **몇시간전 으로 시간표기
 
 ### [게시판글쓰기]
-![write](/frontend/src/Image/write.png)
 <br>
+![write](/frontend/src/Image/write.png)
+
+- 로그인된 회원별 글 저장
 
 ### [상세게시판]
-![detailBoard](/frontend/src/Image/detailBoard.png)
 <br>
+![detailBoard](/frontend/src/Image/detailBoard.png)
+
+- 게시판별 댓글 불러오기 및 댓글 작성
+- 로그인된 회원별 댓글 저장
 
 ### [마이페이지]
-![myPage](/frontend/src/Image/myPage.png)
 <br>
+![myPage](/frontend/src/Image/myPage.png)
+
+- 로그인된 회원별 관심웹툰 불러오기
+- 하트 누를시 저장, 및 삭제
 
 ## 5. 개발일지
-
 <br>
+https://nettle-quicksand-656.notion.site/ToonPedia-1261509e5055800e8a98dda7da880825?pvs=4
+
+
 
 ## 6. 시연영상
+<br>
  - https://youtu.be/7hHjTC5dWq0
+
+
+## 7. 참고
+
+ - https://korea-webtoon-api-cc7dda2f0d77.herokuapp.com/api-docs/
