@@ -1,5 +1,0 @@
-package edu.pnu.domain.dto;
-
-public class CommentDTO {
-
-}
