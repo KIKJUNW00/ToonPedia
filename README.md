@@ -128,7 +128,7 @@
 ## 5. 개발일지
 <br>
 
-https://nettle-quicksand-656.notion.site/ToonPedia-1261509e5055800e8a98dda7da880825?pvs=4
+- https://nettle-quicksand-656.notion.site/ToonPedia-1261509e5055800e8a98dda7da880825?pvs=4
 
 
 
