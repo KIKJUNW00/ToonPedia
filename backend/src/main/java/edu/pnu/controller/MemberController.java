@@ -4,15 +4,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.pnu.domain.Member;
 import edu.pnu.domain.dto.FavoriteDTO;
-import edu.pnu.domain.Favorite;
 import edu.pnu.service.FavoriteService;
 import edu.pnu.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -48,8 +48,13 @@ public class MemberController {
 	@PostMapping("/favorite")
 	public ResponseEntity<?> favoriteWebtoons(@RequestBody FavoriteDTO dto, @AuthenticationPrincipal User user){
 		
-		
-		return ResponseEntity.ok(favoriteService.favoriteWebtoons(dto, user.getUsername()));
+		try {
+	        FavoriteDTO savedFavorite = favoriteService.favoriteWebtoons(dto, user.getUsername());
+	        return ResponseEntity.ok(savedFavorite);
+	    } catch (IllegalArgumentException e) {
+	        return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+	    }
+//		return ResponseEntity.ok(favoriteService.favoriteWebtoons(dto, user.getUsername()));
 	}
 	
 	//유저별 관심웹툰가져오기
@@ -59,6 +64,18 @@ public class MemberController {
 		return ResponseEntity.ok(favoriteService.UserFavorite(user.getUsername()));
 	}
 	
+	
+	@DeleteMapping("/favorites")
+	public ResponseEntity<?> deleteFavorite(@RequestBody FavoriteDTO dto, @AuthenticationPrincipal UserDetails userDetails) {
+		String userId = userDetails.getUsername(); // 현재 로그인된 사용자 ID
+
+		try {
+	        favoriteService.deleteFavorite(dto, userId);
+	        return ResponseEntity.ok("관심 웹툰 삭제 완료");
+	    } catch (IllegalArgumentException e) {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+	    }
+	}
 }
 
 

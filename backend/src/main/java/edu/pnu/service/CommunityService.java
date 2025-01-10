@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +29,7 @@ public class CommunityService {
 	
 	//커뮤니티 게시판 데이터 모두 불러오기
 	public List<CommunityDTO> getBoards() {
-		List<Community> list = commuRepo.findAll();
+		List<Community> list = commuRepo.findAllByOrderByCreateDateDesc();
 		
 		List<CommunityDTO> ret = new ArrayList<>();
 		
@@ -83,6 +84,7 @@ public class CommunityService {
 		Community findCommunity = commuRepo.findById(community.getId())
 	            .orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다. ID: " + community.getId()));
 		
+		findCommunity.setTitle(community.getTitle());
 		findCommunity.setContent(community.getContent());
 	    commuRepo.save(findCommunity);
 		
@@ -90,6 +92,7 @@ public class CommunityService {
 	
 //	게시글 삭제
 	public void deleteBoard(Long id) {
+		
 		System.out.println("삭제");
 	    commuRepo.deleteById(id);
 	}

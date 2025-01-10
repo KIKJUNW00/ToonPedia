@@ -20,14 +20,15 @@
 | **김준우** | **류승진** |
 | :------: |  :------: |
 | **BE** | **FE** |
-| [<img src="https://avatars.githubusercontent.com/u/106502312?v=4" height=150 width=150> <br/> @KIKJUNW0](https://github.com/KIKJUNW00) |
+| [<img src="/frontend/src/Image/KakaoTalk_20241017_113806726.jpg" height=150 width=150> <br/> @KIKJUNW0](https://github.com/KIKJUNW00) |
+| [<img src="/frontend/src/Image/pngtree-colorless-character-avatar-with-glasses-png-image_6317135.jpg" height=150 width=150> <br/> @lenoau](https://github.com/lenoau) |
 
 </div>
 
 <br>
 
 ## 1. 개발 기간
-- 전체 개발 기간 : 2024-12-10 ~ 2025-01-10
+- 전체 개발 기간 : 2024-12-06 ~ 2025-01-10
 
 <br>
 
@@ -39,41 +40,63 @@
 
 <br>
 
-## 3. 페이지별 기능
+## 3. 역할 분담
+
+### 👦김준우(BE)
+
+- **기능**
+    - 커뮤니티: 게시글 작성, 수정, 삭제, 상세, 전달
+    - 로그인: OAuth2로그인, JWT생성 및 전달
+    - 마이페이지: 관심웹툰 회원별 저장, 관심웹툰 삭제
+
+<br>
+
+### 🧑류승진(FE)
+- **기능**
+    - 웹툰정보: 웹툰정보 메인화면에 불러오기, 요일별 웹툰 불러오기
+    - Rest API를 사용한 화면 전환 및 기능 구현
+- **UI**
+    - 전체적인 UI작성
+
+<br>
+
+## 4. 페이지별 기능
 
 ### [메인화면]
+![mainPage](/frontend/src/Image/main.png)
 <br>
 
 ### [로그인]
-
+![login](/frontend/src/Image/login.png)
 <br>
 
 ### [회원가입]
-
+![join](/frontend/src/Image/join.png)
 <br>
 
 ### [요일별 웹툰]
-
+![dayWebtoon](/frontend/src/Image/dayWebtoon.png)
 <br>
 
 ### [게시판]
-
+![Board](/frontend/src/Image/Board.png)
 <br>
 
 ### [게시판글쓰기]
-
+![write](/frontend/src/Image/write.png)
 <br>
 
 ### [상세게시판]
-
+![detailBoard](/frontend/src/Image/detailBoard.png)
 <br>
 
 ### [마이페이지]
+![myPage](/frontend/src/Image/myPage.png)
+<br>
+
+## 5. 개발일지
 
 <br>
 
-## 4. 개발일지
-
-<br>
-
-## 5. 시연영상
+## 6. 시연영상
+ - https://youtu.be/7hHjTC5dWq0

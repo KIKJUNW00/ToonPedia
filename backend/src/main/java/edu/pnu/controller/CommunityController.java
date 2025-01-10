@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -57,15 +58,16 @@ public class CommunityController {
 		return ResponseEntity.ok("게시글 작성완료");
 	}
 	
-	
-	@PostMapping("/updateBoard")
+//	게시글 수정
+	@PutMapping("/updateBoard")
 	public ResponseEntity<?> updateBoard(@RequestBody Community community) {
-		
+		System.out.println("dsdsd@@@@@@@@@@@@@@@@@@@@@@@");
 		commuService.updateBoard(community);
 		
 		return ResponseEntity.ok("게시글 업데이트완료");
 	}
 		
+//	게시글 삭제
 	@DeleteMapping("/deleteBoard/{id}")
 	public ResponseEntity<?> deleteBoard(@PathVariable Long id){
 		

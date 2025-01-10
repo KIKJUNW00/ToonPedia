@@ -2,6 +2,7 @@ package edu.pnu.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,13 @@ public class FavoriteService {
 	//관심웹툰 저장
 	public FavoriteDTO favoriteWebtoons(FavoriteDTO dto, String username) {
 		Member member = memberRepo.findById(username).get();
+		
+		// 중복 체크: 웹툰 코드와 회원 ID로 확인
+	    Optional<Favorite> existingFavorite = favoriteRepo.findByCodeAndMemberUserId(dto.getCode(), username);
+
+	    if (existingFavorite.isPresent()) {
+	        throw new IllegalArgumentException("이미 등록된 관심 웹툰입니다.");
+	    }
 		
 		Favorite f = new Favorite();
 		
@@ -54,7 +62,26 @@ public class FavoriteService {
 	}
 	
 //	관심웹툰 삭제
-	public void deleteFavorite(Long id) {
-		
+	public void deleteFavorite(FavoriteDTO dto, String userId) {
+	    Favorite favorite = favoriteRepo.findByCodeAndMemberUserId(dto.getCode(), userId)
+	            .orElseThrow(() -> new IllegalArgumentException("관심 웹툰을 찾을 수 없습니다."));
+
+	    favoriteRepo.delete(favorite);
 	}
+
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
