@@ -138,6 +138,12 @@
  - https://youtu.be/7hHjTC5dWq0
 
 
-## 7. 참고
+ ## 7. 발표자료
+<br>
+
+ - https://www.miricanvas.com/v/144pl5b
+
+
+## 8. 참고
 
  - https://korea-webtoon-api-cc7dda2f0d77.herokuapp.com/api-docs/
