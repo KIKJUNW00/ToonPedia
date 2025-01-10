@@ -159,7 +159,7 @@ export default function MemberShip() {
                             <span className='ml-14'>네이버 회원가입</span>
                         </button>
                         <button className='flex mt-5 rounded-md text-xl items-center bg-[#4285f4] w-3/4 h-[50px] font-bold'>
-                            <img className='ml-5' src={google} alt='google' />
+                            <img className='ml-5' src={google} alt='kakao' />
                             <span className='ml-16'>구글 회원가입</span>
                         </button>
                         </div>

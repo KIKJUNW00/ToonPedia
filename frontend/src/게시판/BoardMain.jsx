@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Left from '../Image/left.png'
 import Right from '../Image/right.png'
-import Search from '../Image/검색마크.png'
+// import Search from '../Image/검색마크.png'
 import BoardList from './BoardList'
 import Title from '../웹툰화면_컴포넌트/Title'
 import BoardWrite from './BoardWrite'
@@ -27,24 +27,34 @@ export default function Board() {
     };
     const token = localStorage.getItem('authToken');
 
-
-  console.log("token",token)
+  console.log(token)
   const fetchBoardData = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/board')
-      console.log("reponse: ",response)
+      const response = await axios.get('http://10.125.121.117:8080/board')
+
       setBoardData(response.data)
     } catch (error) {
       console.error('Error :', error);
     }
   };
 
+  const handleNewPost = async (newPost) => {
+    try {
+        // 새 게시글 서버에 등록하는 API 요청
+        await axios.post('http://10.125.121.117:8080/board', newPost);
+        fetchBoardData(); // 최신 데이터를 다시 가져오기
+    } catch (error) {
+        console.error('Error adding new post:', error);
+    } finally {
+        PopupClose(); // 글쓰기 팝업 닫기
+    }
+};
+
   useEffect(() => {
     fetchBoardData();
-}, [boardData]);
+}, []);
 
-
-  const itemsPerPage = 15;
+  const itemsPerPage = 10;
   const totalPages = Math.ceil(boardData.length / itemsPerPage);
 
   const currentData = boardData.slice(
@@ -59,7 +69,7 @@ export default function Board() {
           <section>
             <div>
               <table className="w-full text-sm">
-                <thead className="font-bold border-b">
+                <thead class="font-bold border-b">
                     <tr>
                       <th className='px-5 py-2 w-[100px]'>번호</th>
                       <th className='px-5 py-2 w-[540px]'>제목</th>
@@ -87,7 +97,7 @@ export default function Board() {
                 <button onClick={PopupOpen} className="inline-block">
                   <div className="p-2 font-bold text-center border-2 bg-slate-200">글쓰기</div>
                 </button>
-                {writeopen && <BoardWrite onClose={PopupClose} />}
+                {writeopen && <BoardWrite onClose={PopupClose} onNewPost={handleNewPost} />}
               </div>
             </div>
           </section>
@@ -124,14 +134,14 @@ export default function Board() {
                   </button>
               </li>
           </ul>
-          <div className='SearchCategory inline-flex items-center justify-center mt-8 border-2 mb-[200px]'>
+          {/* <div className='SearchCategory inline-flex items-center justify-center mt-8 border-2 mb-[200px]'>
             <select className='h-[40px] pr-10 border-r-2'>
               <option>제목</option>
               <option>글쓴이</option>
             </select>
             <input className='h-[40px] w-[230px]' type='text' name='keyword' />
             <button className='Search h-[40px] w-[60px] pl-3 border-l-2' type='submit'><img src={Search} alt='search' /></button>
-          </div>
+          </div> */}
         </div>
         </article>
     </div>

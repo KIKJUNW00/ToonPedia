@@ -13,11 +13,9 @@ export default function Title() {
         if (localStorage.getItem('authToken')) {
             setIsLoggedIn(true);
         } else {
-            console.log("title useeffect false")
             setIsLoggedIn(false);
-            // navigate('/');
         }
-    },[isLoggedIn]);
+    },[]);
 
     const handleLogout = () => {
         localStorage.removeItem('authToken');
@@ -57,7 +55,6 @@ export default function Title() {
                         </Link>
                     </>
                 )}
-                
             </div>
         </div>
         <div className='pt-2 border-b-2 border-black'></div>

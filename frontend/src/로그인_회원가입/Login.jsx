@@ -28,8 +28,7 @@ export default function Login() {
     e.preventDefault();
     
     try {
-      const response = await axios.post(
-        'http://localhost:8080/login', user, 
+      const response = await axios.post( 'http://10.125.121.117:8080/login', user, 
         {
           headers: { 
             'Content-Type': 'application/json', 
@@ -87,7 +86,6 @@ export default function Login() {
     }
   };
 
-  
 
   const enterkeydown = (e) => {
     if (e.keyCode === 13) {
@@ -129,18 +127,18 @@ export default function Login() {
               <span className='mt-5 text-white'>또는</span>
               <div className='flex flex-col items-center w-full'>
                 <button className='flex mt-5 rounded-md text-xl items-center bg-[#fee500] w-3/4 h-[50px] font-bold'
-                        onClick={handlekakaoLogin}>
+                        onClick={(e) => handlekakaoLogin(e, 'kakao')}>
                   <img className='ml-5' src={kakao} alt='kakao' />
                   <span className='ml-14'>카카오 로그인</span>
                 </button>
                 <button className='flex mt-5 rounded-md text-xl items-center bg-[#03c75a] w-3/4 h-[50px] font-bold'
-                        onClick={handleNaverLogin}>
+                        onClick={(e) => handleNaverLogin(e, 'naver')}>
                   <img className='ml-5' src={naver} alt='kakao' />
                   <span className='ml-14'>네이버 로그인</span>
                 </button>
                 <button className='flex mt-5 rounded-md text-xl items-center bg-[#4d78be] w-3/4 h-[50px] font-bold'
-                        onClick={handleGoogleLogin}>
-                  <img className='ml-5' src={google} alt='google' />
+                        onClick={(e) => handleGoogleLogin(e, 'google')}>
+                  <img className='ml-5' src={google} alt='kakao' />
                   <span className='ml-16'>구글 로그인</span>
                 </button>
               </div>

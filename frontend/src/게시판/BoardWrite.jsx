@@ -4,10 +4,11 @@ import BoardClose from './BoardClose';
 import axios from 'axios';
 // import { body } from 'framer-motion/client';
 
-export default function BoardWrite({ onClose }) {
+export default function BoardWrite({ onClose, onNewPost }) {
     const [writeclose, setWriteClose] = useState(false);
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
+    // const [posts, setPosts] = useState([]);
 
     const PopupOpen = () => {
         setWriteClose(true);
@@ -28,18 +29,20 @@ export default function BoardWrite({ onClose }) {
         }
     
         try {
-            await axios.post('http://10.125.121.117:8080/insertBoard', { title, content },
+            const response = await axios.post('http://10.125.121.117:8080/insertBoard', { title, content },
                 {
                     headers: {
                         'Authorization': `${token}`, // Bearer 토큰 방식으로 인증
                         'Content-Type': 'application/json'  
                       }
                 }
-            )
+            );
+
+            const newPost = response.data;
+            onNewPost(newPost) // posts 배열에 newPost 추가
             alert('게시글이 등록되었습니다.');
             setTitle('');
             setContent('');
-            onClose(); // 팝업 닫기
         } catch (error) {
             console.error('Error :', error);
             alert('게시글 등록에 실패했습니다.');
