@@ -68,6 +68,7 @@ export default function MemberShip() {
             await axios.post('http://localhost:8080/join', user);
             alert('회원가입 완료');
             window.location.href = '/Login';
+            
         } catch (error) {
             if (error.response) {
                 console.error('Response Error:', error.response.data);
@@ -75,6 +76,7 @@ export default function MemberShip() {
                 console.error('Network Error:', error.message);
             }
             alert('회원가입 실패');
+            
         }
     };
 
