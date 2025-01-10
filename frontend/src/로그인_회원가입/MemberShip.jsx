@@ -65,7 +65,7 @@ export default function MemberShip() {
         }
 
         try {
-            await axios.post('http://10.125.121.117:8080/join', user);
+            await axios.post('http://localhost:8080/join', user);
             alert('회원가입 완료');
             window.location.href = '/Login';
         } catch (error) {

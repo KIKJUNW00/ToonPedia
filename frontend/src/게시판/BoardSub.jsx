@@ -14,7 +14,7 @@ export default function BoardSub() {
   const handleUpClick = async (id) => {
     try {
       
-      await axios.post(`http://10.125.121.117:8080/board/${id}`, { likes: 1 }, {id});  // 데이터에 좋아요 1 증가를 요청
+      await axios.post(`http://localhost:8080/board/${id}`, { likes: 1 }, {id});  // 데이터에 좋아요 1 증가를 요청
       
       setBoardData((prevData) =>
         prevData.map((item) =>
@@ -31,7 +31,7 @@ export default function BoardSub() {
   const fetchBoardData = async () => {
     console.log('id : ', id);
     try {
-      const response = await axios.get(`http://10.125.121.117:8080/board/${id}`);
+      const response = await axios.get(`http://localhost:8080/board/${id}`);
       setBoardData([response.data]); 
     } catch (error) {
       console.error('Error:', error);

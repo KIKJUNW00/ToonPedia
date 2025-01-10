@@ -29,7 +29,7 @@ export default function BoardWrite({ onClose, onNewPost }) {
         }
     
         try {
-            const response = await axios.post('http://10.125.121.117:8080/insertBoard', { title, content },
+            const response = await axios.post('http://localhost:8080/insertBoard', { title, content },
                 {
                     headers: {
                         'Authorization': `${token}`, // Bearer 토큰 방식으로 인증

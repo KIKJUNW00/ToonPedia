@@ -26,7 +26,7 @@ export default function BoardSubList(props) {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const response = await axios.get(`http://10.125.121.117:8080/comment/${community_id}`, {
+        const response = await axios.get(`http://localhost:8080/comment/${community_id}`, {
           headers: {
             'Authorization': `${token}`, 
             'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ export default function BoardSubList(props) {
   const handleSubmit = async () => {
     if (content.trim()) {
       try {
-        const response = await axios.post('http://10.125.121.117:8080/commentWrite', { content, community_id },
+        const response = await axios.post('http://localhost:8080/commentWrite', { content, community_id },
           {
             headers: {
               'Authorization': `${token}`, 
@@ -93,7 +93,7 @@ export default function BoardSubList(props) {
       return;
     }
     try {
-     const response =  await axios.put(`http://10.125.121.117:8080/updateBoard`, 
+     const response =  await axios.put(`http://localhost:8080/updateBoard`, 
         {
           id : community_id,
           content: editedContent,
@@ -125,7 +125,7 @@ export default function BoardSubList(props) {
   const handleDelete = async () => {
     if (window.confirm('정말 삭제하시겠습니까?')) {
       try {
-       const response = await axios.delete(`http://10.125.121.117:8080/deleteBoard/${community_id}`, {
+       const response = await axios.delete(`http://localhost:8080/deleteBoard/${community_id}`, {
           headers: {
             Authorization: `${token}`,  
           },

@@ -30,7 +30,7 @@ export default function App() {
               {/* 로그인 및 회원가입 */}
               <Route path='/Login' element={<Login />} />
               <Route path='/Membership' element={<MemberShip />} />
-              <Route path='./oauth2/callback' element={<OAuthCallback/>} />
+              <Route path='/oauth2/callback' element={<OAuthCallback/>} />
 
               {/* 게시판 관련 */}
               <Route path='/Board' element={<BoardMain />} />

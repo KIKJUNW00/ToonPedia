@@ -13,7 +13,7 @@ export default function FavoriteContainer({ webtoons }) {
       if (!token) return;
 
       try {
-        const response = await axios.get(`http://10.125.121.117:8080/favorites`, {
+        const response = await axios.get(`http://localhost:8080/favorites`, {
           headers: { 
                       Authorization: `${token}` 
                    },
@@ -44,7 +44,7 @@ export default function FavoriteContainer({ webtoons }) {
     };
 
     try {
-      await axios.post('http://10.125.121.117:8080/favorite', webtoondata, {
+      await axios.post('http://localhost:8080/favorite', webtoondata, {
         headers: { 
                     Authorization: `${token}`,
                     'Content-Type': 'application/json'
@@ -61,7 +61,7 @@ export default function FavoriteContainer({ webtoons }) {
     if (!token) return;
 
     try {
-      await axios.delete(`http://10.125.121.117:8080/favorite`, {
+      await axios.delete(`http://localhost:8080/favorite`, {
         headers: { Authorization: `${token}` },
       });
       setLikedWebtoons((prev) => prev.filter((webtoon) => webtoon.id !== id));
